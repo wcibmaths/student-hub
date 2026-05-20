@@ -17,10 +17,23 @@ export function TopicLinksRow({ links }: { links: TLinks }) {
 }
 
 export function ChapterLinksRow({ links }: { links: ChapterLinks }) {
-  return (
-    <div className="ch-links">
-      {isValid(links.pmt) && <TopicLink cls="pmt" label="PMT" url={links.pmt} />}
-      {isValid(links.examSolutions) && <TopicLink cls="corbett" label="ExamSolutions" url={links.examSolutions} />}
-    </div>
-  );
+  const buttons = [
+    isValid(links.aLevelMathsRevision) && (
+      <TopicLink key="almr" cls="almr" label="A Level Maths Revision" url={links.aLevelMathsRevision!} />
+    ),
+    isValid(links.rocketRevise) && (
+      <TopicLink key="rr" cls="rr" label="Rocket Revise" url={links.rocketRevise!} />
+    ),
+    isValid(links.pmtSolutionBank) && (
+      <TopicLink key="pmt" cls="pmt" label="PMT Solution Bank" url={links.pmtSolutionBank!} />
+    ),
+    isValid(links.examSolutions) && (
+      <TopicLink key="es" cls="corbett" label="ExamSolutions" url={links.examSolutions!} />
+    ),
+  ].filter(Boolean);
+
+  if (buttons.length === 0) {
+    return <div className="ch-links"><span className="ch-coming-soon">Links coming soon</span></div>;
+  }
+  return <div className="ch-links">{buttons}</div>;
 }

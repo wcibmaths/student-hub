@@ -10,12 +10,16 @@ export interface IGCSEPaper {
   ms2: string;
 }
 
+export type IALSource = 'Pearson' | 'PMT' | 'ExamSolutions';
+
 export interface IALPaper {
   year: number;
   series: string;
   s: Series;
-  p: string;
-  ms: string;
+  questionPaperUrl: string;
+  markSchemeUrl: string;
+  source: IALSource | string;
+  status?: string;
 }
 
 const P = 'https://qualifications.pearson.com/content/dam/pdf/International-GCSE/Mathematics-A/2016/Exam-materials';

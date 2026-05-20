@@ -205,6 +205,9 @@ button { font-family: var(--font); cursor: pointer; }
 .topic-link.epp { background: var(--purple-bg); color: var(--purple-txt); border-color: var(--purple-bd); }
 .topic-link.sme { background: var(--green-bg); color: var(--green-txt); border-color: var(--green-bd); }
 .topic-link.pmt { background: var(--teal-bg); color: var(--teal-txt); border-color: var(--teal-bd); }
+.topic-link.almr { background: var(--purple-bg); color: var(--purple-txt); border-color: var(--purple-bd); }
+.topic-link.rr { background: var(--amber-bg, #FFF6E5); color: var(--amber-txt, #8A5A00); border-color: var(--amber-bd, #FCE3A8); }
+.ch-coming-soon { font-size: 11px; color: var(--ink3); font-style: italic; padding: 4px 0; }
 .freq-legend { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; padding: 10px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); font-size: 11px; color: var(--ink2); }
 .freq-legend-title { font-size: 11px; font-weight: 500; color: var(--ink); margin-right: 4px; }
 .freq-legend-item { display: flex; align-items: center; gap: 5px; }

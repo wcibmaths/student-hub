@@ -1,0 +1,271 @@
+Paste this into Replit:
+
+```text
+Please fix the IAL Mathematics and IAL Further Mathematics resource URLs using the cleaned Excel workbook:
+
+IAL_Maths_Hub_URLs_Cleaned_No_GradeMax.xlsx
+
+Main rule:
+Do not use GradeMax anywhere.
+Do not use Exam Papers Practice anywhere.
+Do not use Save My Exams anywhere.
+
+Use only these sources:
+
+Topic and chapter practice:
+A Level Maths Revision
+Rocket Revise, only where the link works
+PMT Solution Bank
+ExamSolutions, where useful
+
+Past papers:
+Pearson official direct PDFs first, only if verified
+PMT direct PDFs as fallback
+ExamSolutions as fallback if useful
+
+1. Fix Topic Practice links
+
+For every IAL and Further Maths module, update the chapter cards using the cleaned Excel file.
+
+Modules:
+
+P1
+P2
+P3
+P4
+FP1
+FP2
+S1
+S2
+S3
+M1
+M2
+D1
+
+Each chapter should use this structure:
+
+links: {
+  aLevelMathsRevision: "...",
+  rocketRevise: "...",
+  pmtSolutionBank: "...",
+  examSolutions: "..."
+}
+
+Only show a button if the URL exists and is not blank, "#", or broken.
+
+Do not show a button for a source if the link does not go to a useful page for that unit or chapter.
+
+2. Button labels for Topic Practice
+
+Use these labels:
+
+A Level Maths Revision
+Rocket Revise
+PMT Solution Bank
+ExamSolutions
+
+Do not show:
+
+GradeMax
+Save My Exams
+Exam Papers Practice
+
+3. Source rules for Topic Practice
+
+A Level Maths Revision:
+Use for topic questions where available.
+This is strongest for P1, P2, P3, P4, and S1.
+
+Rocket Revise:
+Use only where the page opens and matches the unit or topic.
+Do not use if the link is broken or too generic.
+
+PMT Solution Bank:
+Use as the main backup for chapter practice and worked textbook-style solutions.
+This should be used across IAL Maths and Further Maths units where topic-question pages are limited.
+
+ExamSolutions:
+Use where there are relevant worked examples, videos, or past paper solutions for the unit.
+
+4. Do not invent topic-specific URLs
+
+If a source does not have a clear page for a chapter, leave the field blank.
+
+Do not guess URLs.
+Do not create fake topic paths.
+Do not link to pages that return 404 errors.
+
+5. Fix Past Papers
+
+For the IAL Past Papers tab, use this structure for each row:
+
+unit
+year
+series
+questionPaperUrl
+markSchemeUrl
+source
+status
+
+Cover years 2018 to 2025 where possible.
+
+Include these units:
+
+P1
+P2
+P3
+P4
+FP1
+FP2
+S1
+S2
+S3
+M1
+M2
+D1
+
+6. Past paper source priority
+
+Use this order:
+
+1. Pearson official direct PDF, if verified
+2. PMT direct PDF, if Pearson is missing or locked
+3. ExamSolutions, if PMT is unavailable
+
+Pearson URLs must open directly to a PDF.
+
+Do not guess Pearson date codes.
+Only use Pearson links if they are verified.
+
+If the Pearson URL does not open, leave it blank and use PMT as fallback.
+
+7. Locked papers
+
+Do not include locked Pearson papers.
+
+Do not include 2025 papers unless the PDF opens freely for students.
+
+If a 2025 paper is locked, leave the Pearson URL blank and mark the row as:
+
+Locked or not verified
+
+8. Past paper button labels
+
+Use:
+
+Question Paper
+Mark Scheme
+
+Each button should open in a new tab:
+
+target="_blank"
+rel="noopener noreferrer"
+
+9. Past paper table filters
+
+Keep or add filters for:
+
+Unit
+Year
+Series
+Source
+
+Series should support:
+
+January
+June
+October
+November
+
+Only show rows where at least one usable question paper or mark scheme URL exists.
+
+10. Keep IAL and Further Maths cleanly separated
+
+IAL Mathematics should include:
+
+P1
+P2
+P3
+P4
+S1
+M1
+D1
+
+IAL Further Mathematics should include:
+
+FP1
+FP2
+S2
+S3
+M2
+
+If a module appears in both areas, keep the same URL data but display it in the correct programme section.
+
+11. Rendering rules
+
+For topic cards:
+
+If a chapter has no working URLs yet, show the chapter title but display:
+
+Links coming soon
+
+Do not show broken buttons.
+
+For past papers:
+
+If the question paper URL is blank, hide the Question Paper button.
+If the mark scheme URL is blank, hide the Mark Scheme button.
+If both are blank, hide the row.
+
+12. Validation checks
+
+After updating, check:
+
+GradeMax does not appear anywhere.
+Save My Exams does not appear anywhere.
+Exam Papers Practice does not appear anywhere.
+Topic Practice links open useful pages.
+No button links to "#".
+No blank buttons appear.
+Past papers use Pearson first where verified.
+PMT is only used as fallback for past papers.
+Past paper links open directly to PDFs where possible.
+The 2018 to 2025 range is included where available.
+The table works on student laptop screens.
+Topic Practice still appears before Past Papers.
+Formula sheets and specifications remain in the sidebar Exam documents section.
+
+13. Data structure suggestion
+
+Use this kind of structure:
+
+const ialResources = {
+  topicPractice: [
+    {
+      programme: "IAL Mathematics",
+      unit: "P1",
+      unitName: "Pure 1",
+      chapter: "Algebraic Expressions",
+      links: {
+        aLevelMathsRevision: "",
+        rocketRevise: "",
+        pmtSolutionBank: "",
+        examSolutions: ""
+      }
+    }
+  ],
+  pastPapers: [
+    {
+      unit: "P1",
+      year: 2023,
+      series: "October",
+      questionPaperUrl: "",
+      markSchemeUrl: "",
+      source: "Pearson",
+      status: "Verified"
+    }
+  ]
+}
+
+Please use the cleaned Excel file as the starting point, then update the app data and rendering logic to follow these rules.
+```
