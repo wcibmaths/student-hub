@@ -1,0 +1,191 @@
+Please fix the Maths Hub URLs for IGCSE Mathematics A 4MA1 Higher.
+
+Use the Excel file I uploaded as the source of truth for the links.
+
+Main goal:
+All Topic Practice buttons and Past Paper buttons should go directly to useful, free student-accessible pages or PDFs.
+
+1. Fix Topic Practice links
+
+For IGCSE Mathematics A 4MA1, update every topic card so the buttons use topic-specific URLs.
+
+Each topic should use this structure:
+
+links: {
+  corbett: "...",
+  mathsGenie: "...",
+  examPapersPractice: "...",
+  pmt: "..."
+}
+
+Rules:
+
+Only show a button if the URL exists and is not "#".
+Do not show broken, blank, placeholder, or homepage-only links.
+Remove Save My Exams from all topic cards.
+Use the button labels:
+Corbett
+Maths Genie
+Exam Papers Practice
+PMT
+
+For Corbettmaths:
+Use the relevant topic practice page.
+Example:
+Ratio & proportion should use:
+https://corbettmaths.com/2025/12/19/ratios-and-equations-practice-questions/
+
+For Maths Genie / YesGenie:
+Use the closest topic-specific worksheet page.
+Keep the button label as “Maths Genie”, even if the URL is from yesgenie.com.
+
+For Exam Papers Practice:
+Use this 4MA1 Higher topic questions page as the fallback:
+https://www.exampaperspractice.co.uk/igcse-edexcel-9-1-mathematics-a-4ma1-topic-questions-higher-level/
+
+If a more specific topic URL exists, use that instead.
+If not, use the fallback page.
+
+For PMT:
+Use the closest relevant PMT topic question page.
+Do not use PMT for past papers if Pearson direct PDFs are available.
+
+2. Fix Past Papers links
+
+For the Past Papers tab in IGCSE Mathematics A 4MA1, use Pearson official PDF URLs only.
+
+Do not use PMT links in the Past Papers tab.
+
+Each row should include:
+
+Year
+Series
+Paper 1H question paper PDF
+Paper 1H mark scheme PDF
+Paper 2H question paper PDF
+Paper 2H mark scheme PDF
+
+Each button should open directly to a PDF file.
+
+Use Pearson URLs in this format:
+
+Question paper example:
+https://qualifications.pearson.com/content/dam/pdf/International-GCSE/Mathematics-A/2016/Exam-materials/4ma1-2h-que-20231111.pdf
+
+Mark scheme example:
+https://qualifications.pearson.com/content/dam/pdf/International-GCSE/Mathematics-A/2016/Exam-materials/4ma1-2h-rms-20231111.pdf
+
+Use Pearson URLs only from:
+qualifications.pearson.com/content/dam/pdf/International-GCSE/Mathematics-A/2016/Exam-materials/
+
+3. URL naming pattern
+
+Pearson 4MA1 Higher files usually follow this structure:
+
+Question paper:
+4ma1-1h-que-[datecode].pdf
+4ma1-2h-que-[datecode].pdf
+
+Mark scheme:
+4ma1-1h-rms-[datecode].pdf
+4ma1-2h-rms-[datecode].pdf
+
+Examples:
+
+Paper 1H question:
+4ma1-1h-que-20231111.pdf
+
+Paper 1H mark scheme:
+4ma1-1h-rms-20231111.pdf
+
+Paper 2H question:
+4ma1-2h-que-20231111.pdf
+
+Paper 2H mark scheme:
+4ma1-2h-rms-20231111.pdf
+
+4. Use only accessible papers
+
+Do not link locked Pearson papers.
+Do not include papers from the most recent 12 months if they are teacher-only.
+Only include papers where the direct PDF opens for students.
+
+If a paper or mark scheme cannot be verified, leave that URL blank and do not render the button.
+
+5. Update the Past Papers table buttons
+
+For each paper row, show:
+
+Paper 1H
+MS 1H
+Paper 2H
+MS 2H
+
+Each button should open directly in a new tab.
+
+Use:
+target="_blank"
+rel="noopener noreferrer"
+
+6. Do not mix sources
+
+Topic Practice can use:
+Corbettmaths
+Maths Genie / YesGenie
+Exam Papers Practice
+PMT
+
+Past Papers should use:
+Pearson official direct PDFs only
+
+Do not use PMT, Save My Exams, or other mirror sites for past papers.
+
+7. Validation checks
+
+After updating, check the following:
+
+Topic Practice appears before Past Papers.
+Save My Exams does not appear anywhere.
+Every topic button opens a relevant topic page.
+No topic button points to "#".
+Past paper buttons open direct PDF files.
+Past paper URLs are Pearson official URLs.
+No PMT links appear in the Past Papers tab.
+If a PDF URL does not open, remove the button or leave the field blank.
+The January, June, and November filters still work.
+The table still displays correctly on laptop screens.
+
+8. Implementation approach
+
+Create or update a data file for 4MA1 links.
+
+Suggested structure:
+
+const igcseMathsAResources = {
+  topics: [
+    {
+      strand: "Number",
+      topic: "Ratio & proportion",
+      frequency: "Very high",
+      marks: "~8-10%",
+      links: {
+        corbett: "https://corbettmaths.com/2025/12/19/ratios-and-equations-practice-questions/",
+        mathsGenie: "...",
+        examPapersPractice: "https://www.exampaperspractice.co.uk/igcse-edexcel-9-1-mathematics-a-4ma1-topic-questions-higher-level/",
+        pmt: "..."
+      }
+    }
+  ],
+  pastPapers: [
+    {
+      year: 2023,
+      series: "November",
+      paper1H: "https://qualifications.pearson.com/content/dam/pdf/International-GCSE/Mathematics-A/2016/Exam-materials/4ma1-1h-que-20231111.pdf",
+      markScheme1H: "https://qualifications.pearson.com/content/dam/pdf/International-GCSE/Mathematics-A/2016/Exam-materials/4ma1-1h-rms-20231111.pdf",
+      paper2H: "https://qualifications.pearson.com/content/dam/pdf/International-GCSE/Mathematics-A/2016/Exam-materials/4ma1-2h-que-20231111.pdf",
+      markScheme2H: "https://qualifications.pearson.com/content/dam/pdf/International-GCSE/Mathematics-A/2016/Exam-materials/4ma1-2h-rms-20231111.pdf"
+    }
+  ]
+}
+
+Please update the app using this structure, then replace the existing placeholder or mixed-source links.

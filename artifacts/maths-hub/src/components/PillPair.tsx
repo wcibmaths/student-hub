@@ -25,15 +25,31 @@ interface PillPairProps {
   msLabel?: string;
 }
 
+function isValid(url: string | undefined | null): url is string {
+  return typeof url === 'string' && url.length > 0 && url !== '#';
+}
+
 export function PillPair({ pUrl, msUrl, paperLabel = 'Paper', msLabel = 'MS' }: PillPairProps) {
   return (
     <div className="pill-wrap">
-      <a className="dl-pill paper" href={pUrl} target="_blank" rel="noopener">
-        <DownloadIcon />{paperLabel}
-      </a>
-      <a className="dl-pill ms" href={msUrl} target="_blank" rel="noopener">
-        <CheckIcon />{msLabel}
-      </a>
+      {isValid(pUrl) ? (
+        <a className="dl-pill paper" href={pUrl} target="_blank" rel="noopener noreferrer">
+          <DownloadIcon />{paperLabel}
+        </a>
+      ) : (
+        <span className="dl-pill paper disabled" aria-disabled="true">
+          <DownloadIcon />{paperLabel}
+        </span>
+      )}
+      {isValid(msUrl) ? (
+        <a className="dl-pill ms" href={msUrl} target="_blank" rel="noopener noreferrer">
+          <CheckIcon />{msLabel}
+        </a>
+      ) : (
+        <span className="dl-pill ms disabled" aria-disabled="true">
+          <CheckIcon />{msLabel}
+        </span>
+      )}
     </div>
   );
 }
@@ -46,7 +62,7 @@ interface TopicLinkProps {
 
 export function TopicLink({ cls, label, url }: TopicLinkProps) {
   return (
-    <a className={`topic-link ${cls}`} href={url} target="_blank" rel="noopener">
+    <a className={`topic-link ${cls}`} href={url} target="_blank" rel="noopener noreferrer">
       <ExtIcon />{label}
     </a>
   );

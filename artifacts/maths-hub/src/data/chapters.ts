@@ -3,7 +3,6 @@ import type { Freq } from './topics';
 export interface ChapterLinks {
   pmt?: string;
   examSolutions?: string;
-  examPapersPractice?: string;
 }
 
 export interface Chapter {
@@ -16,42 +15,41 @@ export interface Chapter {
 
 const PMT_4PM_FP = 'https://www.physicsandmathstutor.com/maths-revision/igcse-edexcel/further-pure/';
 const ES_4PM = 'https://www.examsolutions.net/international-exams/edexcel/igcse-further-pure/';
-const EPP_4PM = 'https://www.exampaperspractice.co.uk/edexcel-igcse-further-pure-mathematics-4pm1-topic-questions/';
 
 export const CHAPTERS_4PM1: Chapter[] = [
   { n: 1, name: 'Surds and Logarithmic Functions', freq: 'high',
     note: 'Surds, rationalising denominators, laws of logs, solving exponential and log equations.',
-    links: { pmt: PMT_4PM_FP, examSolutions: ES_4PM, examPapersPractice: EPP_4PM } },
+    links: { pmt: PMT_4PM_FP, examSolutions: ES_4PM } },
   { n: 2, name: 'The Quadratic Function', freq: 'very-high',
     note: 'Completing the square, discriminant, roots and coefficients, disguised quadratics.',
-    links: { pmt: PMT_4PM_FP, examSolutions: ES_4PM, examPapersPractice: EPP_4PM } },
+    links: { pmt: PMT_4PM_FP, examSolutions: ES_4PM } },
   { n: 3, name: 'Inequalities and Identities', freq: 'high',
     note: 'Solving quadratic inequalities, polynomial identities, factor and remainder theorems.',
-    links: { pmt: PMT_4PM_FP, examSolutions: ES_4PM, examPapersPractice: EPP_4PM } },
+    links: { pmt: PMT_4PM_FP, examSolutions: ES_4PM } },
   { n: 4, name: 'Sketching Polynomials', freq: 'medium',
     note: 'Sketching cubic and higher-degree curves, understanding roots and turning points.',
-    links: { pmt: PMT_4PM_FP, examSolutions: ES_4PM, examPapersPractice: EPP_4PM } },
+    links: { pmt: PMT_4PM_FP, examSolutions: ES_4PM } },
   { n: 5, name: 'Sequences and Series', freq: 'very-high',
     note: 'Arithmetic and geometric sequences, sum to n terms, sum to infinity of geometric series.',
-    links: { pmt: PMT_4PM_FP, examSolutions: ES_4PM, examPapersPractice: EPP_4PM } },
+    links: { pmt: PMT_4PM_FP, examSolutions: ES_4PM } },
   { n: 6, name: 'The Binomial Series', freq: 'high',
     note: 'Binomial expansion for positive integer powers using (a + b)ⁿ.',
-    links: { pmt: PMT_4PM_FP, examSolutions: ES_4PM, examPapersPractice: EPP_4PM } },
+    links: { pmt: PMT_4PM_FP, examSolutions: ES_4PM } },
   { n: 7, name: 'Scalar and Vector Quantities', freq: 'high',
     note: 'Vector addition, subtraction, magnitude, unit vectors, scalar product, geometric applications.',
-    links: { pmt: PMT_4PM_FP, examSolutions: ES_4PM, examPapersPractice: EPP_4PM } },
+    links: { pmt: PMT_4PM_FP, examSolutions: ES_4PM } },
   { n: 8, name: 'Rectangular Cartesian Coordinates', freq: 'high',
     note: 'Distance, midpoint, perpendicular bisector, equation of a circle, tangent and chord properties.',
-    links: { pmt: PMT_4PM_FP, examSolutions: ES_4PM, examPapersPractice: EPP_4PM } },
+    links: { pmt: PMT_4PM_FP, examSolutions: ES_4PM } },
   { n: 9, name: 'Differentiation', freq: 'very-high',
     note: 'Product, quotient and chain rules; eˣ, sin x, cos x; tangents, normals, stationary points.',
-    links: { pmt: PMT_4PM_FP, examSolutions: ES_4PM, examPapersPractice: EPP_4PM } },
+    links: { pmt: PMT_4PM_FP, examSolutions: ES_4PM } },
   { n: 10, name: 'Integration', freq: 'very-high',
     note: 'Definite and indefinite integrals, area under a curve, kinematics applications.',
-    links: { pmt: PMT_4PM_FP, examSolutions: ES_4PM, examPapersPractice: EPP_4PM } },
+    links: { pmt: PMT_4PM_FP, examSolutions: ES_4PM } },
   { n: 11, name: 'Trigonometry', freq: 'very-high',
     note: 'Radians, arc length, sector area, identities, equations in given intervals, 3D problems.',
-    links: { pmt: PMT_4PM_FP, examSolutions: ES_4PM, examPapersPractice: EPP_4PM } },
+    links: { pmt: PMT_4PM_FP, examSolutions: ES_4PM } },
 ];
 
 // IAL module chapter links — PMT and ExamSolutions for IAL Edexcel Maths.

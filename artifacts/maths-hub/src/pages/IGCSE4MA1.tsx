@@ -126,7 +126,7 @@ export function IGCSE4MA1({ onNav }: Props) {
                 </tbody>
               </table>
             </div>
-            <div className="table-note">Sources: <a href="https://www.paperlords.org/igcse" target="_blank" rel="noopener">Paperlords</a> · Pearson Edexcel.</div>
+            <div className="table-note">Sources: <a href="https://qualifications.pearson.com/en/qualifications/edexcel-international-gcses/international-gcse-mathematics-a-2016.coursematerials.html" target="_blank" rel="noopener noreferrer">Pearson Qualifications</a> — official direct PDFs. Some recent series are teacher-only; greyed buttons indicate a paper or mark scheme not yet released to students.</div>
           </>
         )}
 
