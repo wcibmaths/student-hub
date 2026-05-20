@@ -2,11 +2,12 @@ import { useState } from 'react';
 import type { View } from '../App';
 import { MODULE_INFO } from '../data/modules';
 import { IAL_CHAPTERS } from '../data/chapters';
-import { PillPair, TopicLink } from '../components/PillPair';
+import { TopicLink } from '../components/PillPair';
+import { ChapterLinksRow } from '../components/TopicLinks';
 
 export type ModuleKey = 'P1' | 'P2' | 'P3' | 'P4' | 'FP1' | 'FP2' | 'S1' | 'S2' | 'S3' | 'D1' | 'M1' | 'M2';
 
-type Tab = 'papers' | 'topics' | 'formula' | 'spec';
+type Tab = 'topics' | 'papers' | 'notes';
 type SeriesFilter = 'all' | 'jan' | 'jun' | 'oct';
 
 interface Props {
@@ -16,7 +17,7 @@ interface Props {
 }
 
 export function ModuleDetail({ mod, parent, onNav }: Props) {
-  const [tab, setTab] = useState<Tab>('papers');
+  const [tab, setTab] = useState<Tab>('topics');
   const [seriesFilter, setSeriesFilter] = useState<SeriesFilter>('all');
   const [chSearch, setChSearch] = useState('');
 
@@ -48,15 +49,35 @@ export function ModuleDetail({ mod, parent, onNav }: Props) {
           <span className="pg-chip">Edexcel IAL</span>
         </div>
         <div className="tabs">
-          {(['papers','topics','formula','spec'] as Tab[]).map(t => (
+          {(['topics','papers','notes'] as Tab[]).map(t => (
             <div key={t} className={`tab${tab === t ? ' active' : ''}`} onClick={() => setTab(t)}>
-              {t === 'papers' ? 'Past papers' : t === 'topics' ? 'Chapter practice' : t === 'formula' ? 'Formula sheet' : 'Specification'}
+              {t === 'topics' ? 'Chapter practice' : t === 'papers' ? 'Past papers' : 'Notes'}
             </div>
           ))}
         </div>
       </div>
 
       <div className="pg-body">
+        {tab === 'topics' && (
+          <>
+            <input
+              className="search-topics"
+              placeholder="Filter chapters…"
+              value={chSearch}
+              onChange={e => setChSearch(e.target.value)}
+            />
+            <div className="ch-grid">
+              {chapters.map(c => (
+                <div key={c.n} className="ch-card">
+                  <div className="ch-num">Chapter {c.n}</div>
+                  <div className="ch-name">{c.name}</div>
+                  <ChapterLinksRow links={c.links} />
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+
         {tab === 'papers' && (
           <>
             <div className="filter-row">
@@ -68,7 +89,7 @@ export function ModuleDetail({ mod, parent, onNav }: Props) {
               ))}
             </div>
             <div className="papers-wrap">
-              <table className="papers-table" id="tbl-mod">
+              <table className="papers-table">
                 <thead>
                   <tr>
                     <th style={{ width: 60 }}>Year</th>
@@ -111,42 +132,27 @@ export function ModuleDetail({ mod, parent, onNav }: Props) {
           </>
         )}
 
-        {tab === 'topics' && (
+        {tab === 'notes' && (
           <>
-            <input
-              className="search-topics"
-              placeholder="Filter chapters…"
-              value={chSearch}
-              onChange={e => setChSearch(e.target.value)}
-            />
+            <div className="note-bar">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+              External revision notes for {mod}.
+            </div>
             <div className="ch-grid">
-              {chapters.map(c => (
-                <div key={c.n} className="ch-card">
-                  <div className="ch-num">Chapter {c.n}</div>
-                  <div className="ch-name">{c.name}</div>
-                  <div className="ch-links">
-                    {c.pmt && <TopicLink cls="pmt" label="PMT" url={c.pmt} />}
-                    {c.corbett && <TopicLink cls="corbett" label="ExamSolutions" url={c.corbett} />}
-                    {c.sme && <TopicLink cls="sme" label="Save My Exams" url={c.sme} />}
-                  </div>
+              <div className="ch-card">
+                <div className="ch-name">Physics &amp; Maths Tutor — {mod} notes</div>
+                <div className="ch-links">
+                  <TopicLink cls="pmt" label="Open PMT" url={`https://www.physicsandmathstutor.com/maths-revision/a-level-edexcel-international/${mod.toLowerCase()}/`} />
                 </div>
-              ))}
+              </div>
+              <div className="ch-card">
+                <div className="ch-name">ExamSolutions — Edexcel IAL</div>
+                <div className="ch-links">
+                  <TopicLink cls="corbett" label="Open ExamSolutions" url="https://www.examsolutions.net/international-exams/edexcel/" />
+                </div>
+              </div>
             </div>
           </>
-        )}
-
-        {tab === 'formula' && (
-          <div className="note-bar">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-            Upload the formula booklet for this unit and link it here.
-          </div>
-        )}
-
-        {tab === 'spec' && (
-          <div className="note-bar">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-            Link to the official IAL specification PDF here.
-          </div>
         )}
       </div>
     </div>

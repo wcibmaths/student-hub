@@ -3,15 +3,16 @@ import type { View } from '../App';
 import { PAPERS } from '../data/papers';
 import { CHAPTERS_4PM1 } from '../data/chapters';
 import { PillPair, TopicLink } from '../components/PillPair';
+import { ChapterLinksRow } from '../components/TopicLinks';
 import { FreqBadge } from '../components/FreqBadge';
 
-type Tab = 'papers' | 'topics' | 'formula' | 'spec';
+type Tab = 'topics' | 'papers' | 'notes';
 type SeriesFilter = 'all' | 'jan' | 'jun';
 
 interface Props { onNav: (v: View) => void; }
 
 export function IGCSE4PM1({ onNav }: Props) {
-  const [tab, setTab] = useState<Tab>('papers');
+  const [tab, setTab] = useState<Tab>('topics');
   const [seriesFilter, setSeriesFilter] = useState<SeriesFilter>('all');
   const [chSearch, setChSearch] = useState('');
 
@@ -37,15 +38,48 @@ export function IGCSE4PM1({ onNav }: Props) {
           <span className="pg-chip">Single tier</span>
         </div>
         <div className="tabs">
-          {(['papers','topics','formula','spec'] as Tab[]).map(t => (
+          {(['topics','papers','notes'] as Tab[]).map(t => (
             <div key={t} className={`tab${tab === t ? ' active' : ''}`} onClick={() => setTab(t)}>
-              {t === 'papers' ? 'Past papers' : t === 'topics' ? 'Topic practice' : t === 'formula' ? 'Formula sheet' : 'Specification'}
+              {t === 'topics' ? 'Topic practice' : t === 'papers' ? 'Past papers' : 'Notes'}
             </div>
           ))}
         </div>
       </div>
 
       <div className="pg-body">
+        {tab === 'topics' && (
+          <>
+            <input
+              className="search-topics"
+              placeholder="Filter chapters…"
+              value={chSearch}
+              onChange={e => setChSearch(e.target.value)}
+            />
+            <div className="freq-legend">
+              <span className="freq-legend-title">Frequency in exam:</span>
+              <span className="freq-legend-item"><span className="freq-dot" style={{ background: '#EF4444' }} />Very high</span>
+              <span className="freq-legend-item"><span className="freq-dot" style={{ background: '#F59E0B' }} />High</span>
+              <span className="freq-legend-item"><span className="freq-dot" style={{ background: '#3B82F6' }} />Medium</span>
+              <span className="freq-legend-item"><span className="freq-dot" style={{ background: '#9CA3AF' }} />Low</span>
+            </div>
+            <div className="ch-grid">
+              {chapters.map(c => (
+                <div key={c.n} className="ch-card">
+                  <div className="ch-card-top">
+                    <div>
+                      <div className="ch-num">Chapter {c.n}</div>
+                      <div className="ch-name">{c.name}</div>
+                    </div>
+                    {c.freq && <FreqBadge freq={c.freq} />}
+                  </div>
+                  {c.note && <div className="topic-note" style={{ margin: 0 }}>{c.note}</div>}
+                  <ChapterLinksRow links={c.links} />
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+
         {tab === 'papers' && (
           <>
             <div className="filter-row">
@@ -82,59 +116,21 @@ export function IGCSE4PM1({ onNav }: Props) {
           </>
         )}
 
-        {tab === 'topics' && (
+        {tab === 'notes' && (
           <>
-            <input
-              className="search-topics"
-              placeholder="Filter chapters…"
-              value={chSearch}
-              onChange={e => setChSearch(e.target.value)}
-            />
-            <div className="freq-legend">
-              <span className="freq-legend-title">Frequency in exam:</span>
-              <span className="freq-legend-item"><span className="freq-dot" style={{ background: '#EF4444' }} />Very high</span>
-              <span className="freq-legend-item"><span className="freq-dot" style={{ background: '#F59E0B' }} />High</span>
-              <span className="freq-legend-item"><span className="freq-dot" style={{ background: '#3B82F6' }} />Medium</span>
-              <span className="freq-legend-item"><span className="freq-dot" style={{ background: '#9CA3AF' }} />Low</span>
+            <div className="note-bar">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+              External revision notes for IGCSE Further Pure Maths.
             </div>
             <div className="ch-grid">
-              {chapters.map(c => (
-                <div key={c.n} className="ch-card">
-                  <div className="ch-card-top">
-                    <div>
-                      <div className="ch-num">Chapter {c.n}</div>
-                      <div className="ch-name">{c.name}</div>
-                    </div>
-                    {c.freq && <FreqBadge freq={c.freq} />}
-                  </div>
-                  {c.note && <div className="topic-note" style={{ margin: 0 }}>{c.note}</div>}
-                  <div className="ch-links">
-                    {c.epp && <TopicLink cls="epp" label="Exam Papers Practice" url={c.epp} />}
-                    {c.sme && <TopicLink cls="sme" label="Save My Exams" url={c.sme} />}
-                    {c.pmt && <TopicLink cls="pmt" label="PMT" url={c.pmt} />}
-                  </div>
+              <div className="ch-card">
+                <div className="ch-name">Physics &amp; Maths Tutor — 4PM1 notes</div>
+                <div className="ch-links">
+                  <TopicLink cls="pmt" label="Open PMT" url="https://www.physicsandmathstutor.com/maths-revision/igcse-edexcel/further-pure/" />
                 </div>
-              ))}
-            </div>
-          </>
-        )}
-
-        {tab === 'formula' && (
-          <div className="note-bar">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-            Link your hosted formula sheet PDF here. The official Edexcel formula sheet is also provided in both exam papers.
-          </div>
-        )}
-
-        {tab === 'spec' && (
-          <div className="ch-grid">
-            <div className="ch-card">
-              <div className="ch-name">Official specification (2016–)</div>
-              <div className="ch-links">
-                <TopicLink cls="pmt" label="Download PDF" url="https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Further%20Pure%20Mathematics/2016/Specification%20and%20sample%20assessments/international-gcse-in-further-pure-mathematics-spec.pdf" />
               </div>
             </div>
-          </div>
+          </>
         )}
       </div>
     </div>

@@ -3,15 +3,16 @@ import type { View } from '../App';
 import { PAPERS } from '../data/papers';
 import { TOPICS_4MA1 } from '../data/topics';
 import { PillPair, TopicLink } from '../components/PillPair';
+import { TopicLinksRow } from '../components/TopicLinks';
 import { FreqBadge } from '../components/FreqBadge';
 
-type Tab = 'papers' | 'topics' | 'notes' | 'formula' | 'spec';
+type Tab = 'topics' | 'papers' | 'notes';
 type SeriesFilter = 'all' | 'jan' | 'jun' | 'nov';
 
 interface Props { onNav: (v: View) => void; }
 
 export function IGCSE4MA1({ onNav }: Props) {
-  const [tab, setTab] = useState<Tab>('papers');
+  const [tab, setTab] = useState<Tab>('topics');
   const [seriesFilter, setSeriesFilter] = useState<SeriesFilter>('all');
   const [topicSearch, setTopicSearch] = useState('');
 
@@ -39,51 +40,15 @@ export function IGCSE4MA1({ onNav }: Props) {
           <span className="pg-chip">Higher tier</span>
         </div>
         <div className="tabs">
-          {(['papers','topics','notes','formula','spec'] as Tab[]).map(t => (
+          {(['topics','papers','notes'] as Tab[]).map(t => (
             <div key={t} className={`tab${tab === t ? ' active' : ''}`} onClick={() => setTab(t)}>
-              {t === 'papers' ? 'Past papers' : t === 'topics' ? 'Topic practice' : t === 'notes' ? 'Notes' : t === 'formula' ? 'Formula sheet' : 'Specification'}
+              {t === 'topics' ? 'Topic practice' : t === 'papers' ? 'Past papers' : 'Notes'}
             </div>
           ))}
         </div>
       </div>
 
       <div className="pg-body">
-        {tab === 'papers' && (
-          <>
-            <div className="filter-row">
-              <span className="filter-label">Series:</span>
-              {(['all','jan','jun','nov'] as SeriesFilter[]).map(s => (
-                <span key={s} className={`filter-chip${seriesFilter === s ? ' on' : ''}`} onClick={() => setSeriesFilter(s)}>
-                  {s === 'all' ? 'All' : s === 'jan' ? 'January' : s === 'jun' ? 'June' : 'November'}
-                </span>
-              ))}
-            </div>
-            <div className="papers-wrap">
-              <table className="papers-table">
-                <thead>
-                  <tr>
-                    <th style={{ width: 60 }}>Year</th>
-                    <th style={{ width: 100 }}>Series</th>
-                    <th>Paper 1H</th>
-                    <th>Paper 2H</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {papers.map((r, i) => (
-                    <tr key={i}>
-                      <td className="year">{r.year}</td>
-                      <td className="series">{r.series}</td>
-                      <td><PillPair pUrl={r.p1} msUrl={r.ms1} /></td>
-                      <td><PillPair pUrl={r.p2} msUrl={r.ms2} /></td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            <div className="table-note">Sources: <a href="https://www.paperlords.org/igcse" target="_blank" rel="noopener">Paperlords</a> · Pearson Edexcel.</div>
-          </>
-        )}
-
         {tab === 'topics' && (
           <>
             <input
@@ -120,13 +85,7 @@ export function IGCSE4MA1({ onNav }: Props) {
                         <FreqBadge freq={t.freq} pct={t.pct} />
                       </div>
                       <div className="topic-note">{t.note}</div>
-                      <div className="topic-links">
-                        {t.corbett && <TopicLink cls="corbett" label="Corbett" url={t.corbett} />}
-                        {t.genie && <TopicLink cls="genie" label="Maths Genie" url={t.genie} />}
-                        {t.epp && <TopicLink cls="epp" label="Exam Papers Practice" url={t.epp} />}
-                        {t.sme && <TopicLink cls="sme" label="Save My Exams" url={t.sme} />}
-                        {t.pmt && <TopicLink cls="pmt" label="PMT" url={t.pmt} />}
-                      </div>
+                      <TopicLinksRow links={t.links} />
                     </div>
                   ))}
                 </div>
@@ -135,11 +94,47 @@ export function IGCSE4MA1({ onNav }: Props) {
           </>
         )}
 
+        {tab === 'papers' && (
+          <>
+            <div className="filter-row">
+              <span className="filter-label">Series:</span>
+              {(['all','jan','jun','nov'] as SeriesFilter[]).map(s => (
+                <span key={s} className={`filter-chip${seriesFilter === s ? ' on' : ''}`} onClick={() => setSeriesFilter(s)}>
+                  {s === 'all' ? 'All' : s === 'jan' ? 'January' : s === 'jun' ? 'June' : 'November'}
+                </span>
+              ))}
+            </div>
+            <div className="papers-wrap">
+              <table className="papers-table">
+                <thead>
+                  <tr>
+                    <th style={{ width: 60 }}>Year</th>
+                    <th style={{ width: 100 }}>Series</th>
+                    <th>Paper 1H</th>
+                    <th>Paper 2H</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {papers.map((r, i) => (
+                    <tr key={i}>
+                      <td className="year">{r.year}</td>
+                      <td className="series">{r.series}</td>
+                      <td><PillPair pUrl={r.p1} msUrl={r.ms1} /></td>
+                      <td><PillPair pUrl={r.p2} msUrl={r.ms2} /></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="table-note">Sources: <a href="https://www.paperlords.org/igcse" target="_blank" rel="noopener">Paperlords</a> · Pearson Edexcel.</div>
+          </>
+        )}
+
         {tab === 'notes' && (
           <>
             <div className="note-bar">
               <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-              Upload your hosted revision notes as PDFs and link them here. External links below.
+              External revision notes for IGCSE Mathematics A. Upload your own hosted notes and link them here when available.
             </div>
             <div className="ch-grid">
               <div className="ch-card">
@@ -149,31 +144,13 @@ export function IGCSE4MA1({ onNav }: Props) {
                 </div>
               </div>
               <div className="ch-card">
-                <div className="ch-name">Save My Exams — revision notes</div>
+                <div className="ch-name">Maths Genie — IGCSE revision</div>
                 <div className="ch-links">
-                  <TopicLink cls="sme" label="Open SME" url="https://www.savemyexams.com/igcse/maths/edexcel/a/17/revision-notes/" />
+                  <TopicLink cls="genie" label="Open Maths Genie" url="https://www.mathsgenie.co.uk/resources.html" />
                 </div>
               </div>
             </div>
           </>
-        )}
-
-        {tab === 'formula' && (
-          <div className="note-bar">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-            Link your hosted formula sheet PDF here.
-          </div>
-        )}
-
-        {tab === 'spec' && (
-          <div className="ch-grid">
-            <div className="ch-card">
-              <div className="ch-name">Official specification (2016–)</div>
-              <div className="ch-links">
-                <TopicLink cls="pmt" label="Download PDF" url="https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Mathematics%20A/2016/Specification%20and%20sample%20assessments/international-gcse-in-mathematics-spec-a.pdf" />
-              </div>
-            </div>
-          </div>
         )}
       </div>
     </div>

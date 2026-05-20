@@ -1,6 +1,13 @@
 import type { View } from '../App';
 import type { ModuleKey } from './ModuleDetail';
 
+const CODES: Record<ModuleKey, string> = {
+  P1:'WMA11', P2:'WMA12', P3:'WMA13', P4:'WMA14',
+  FP1:'WFM01', FP2:'WFM02',
+  S1:'WST01', S2:'WST02', S3:'WST03',
+  D1:'WDM11', M1:'WME01', M2:'WME02',
+};
+
 interface Props {
   onNav: (v: View) => void;
   onModule: (mod: ModuleKey, parent: 'ial-maths' | 'ial-fm') => void;
@@ -34,7 +41,7 @@ export function IALMaths({ onNav, onModule }: Props) {
             {(['P1','P2','P3','P4'] as ModuleKey[]).map(mod => (
               <div key={mod} className="mod-card pure" onClick={() => onModule(mod, 'ial-maths')}>
                 <div className="mod-card-name">{mod}</div>
-                <div className="mod-card-code">{{ P1:'WMA11', P2:'WMA12', P3:'WMA13', P4:'WMA14' }[mod]}</div>
+                <div className="mod-card-code">{CODES[mod]}</div>
               </div>
             ))}
           </div>

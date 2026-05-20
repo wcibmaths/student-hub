@@ -7,8 +7,18 @@ import { IGCSE4PM1 } from './pages/IGCSE4PM1';
 import { IALMaths } from './pages/IALMaths';
 import { IALFurtherMaths } from './pages/IALFurtherMaths';
 import { ModuleDetail, type ModuleKey } from './pages/ModuleDetail';
+import { FormulaSheets } from './pages/FormulaSheets';
+import { Specifications } from './pages/Specifications';
 
-export type View = 'home' | 'igcse-4ma1' | 'igcse-4pm1' | 'ial-maths' | 'ial-fm' | 'module-detail';
+export type View =
+  | 'home'
+  | 'igcse-4ma1'
+  | 'igcse-4pm1'
+  | 'ial-maths'
+  | 'ial-fm'
+  | 'module-detail'
+  | 'formula-sheets'
+  | 'specifications';
 
 interface ModuleState {
   mod: ModuleKey;
@@ -47,6 +57,8 @@ function App() {
         {view === 'module-detail' && moduleState && (
           <ModuleDetail mod={moduleState.mod} parent={moduleState.parent} onNav={nav} />
         )}
+        {view === 'formula-sheets' && <FormulaSheets onNav={nav} />}
+        {view === 'specifications' && <Specifications onNav={nav} />}
       </main>
     </div>
   );

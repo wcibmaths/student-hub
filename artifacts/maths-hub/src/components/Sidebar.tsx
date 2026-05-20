@@ -54,6 +54,17 @@ export function Sidebar({ current, onNav }: SidebarProps) {
         Exam timetable
       </div>
 
+      <div className="sb-divider" />
+      <div className="sb-label">Exam documents</div>
+      <div className={`sb-item${current === 'formula-sheets' ? ' active' : ''}`} onClick={() => onNav('formula-sheets')}>
+        <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        Formula sheets
+      </div>
+      <div className={`sb-item${current === 'specifications' ? ' active' : ''}`} onClick={() => onNav('specifications')}>
+        <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+        Specifications
+      </div>
+
       <div className="sb-foot">
         Maths Department · 2025–26<br />
         Resources © their respective owners.

@@ -1,0 +1,197 @@
+Paste this into Replit:
+
+Please update the Maths Hub app with the following changes.
+
+1. Reorder the programme tabs
+
+For every programme page, change the tab order to:
+
+Topic practice
+Past papers
+Notes
+
+Remove these tabs from the top programme page tabs:
+
+Formula sheet
+Specification
+
+These should no longer appear as programme-level tabs.
+
+2. Move Formula sheets and Specifications to the left sidebar
+
+In the left sidebar, below the Tools section, add a new subheading:
+
+Exam documents
+
+Under this heading, add two sidebar links:
+
+Formula sheets
+Specifications
+
+These should open central pages that collect all relevant documents together.
+
+Formula sheets page should include grouped cards for:
+
+IGCSE Mathematics A 4MA1
+IGCSE Further Pure Mathematics 4PM1
+IAL Mathematics modules, P1, P2, P3, P4, S1, D1, M1
+IAL Further Mathematics modules, FP1, FP2, S2, S3, M2, plus any shared IAL formula sheets
+
+Specifications page should include grouped cards for:
+
+IGCSE Mathematics A 4MA1
+IGCSE Further Pure Mathematics 4PM1
+IAL Mathematics
+IAL Further Mathematics
+
+Use placeholder URLs for now if exact PDF links are not available, but keep the structure ready.
+
+3. Remove Save My Exams buttons from Topic Practice
+
+Across all topic and chapter cards, remove the Save My Exams button completely.
+
+Do not show the icon, button, or URL.
+
+Reason: students need an account, so we should not direct them there from this hub.
+
+4. Keep external topic links, but make them topic-specific
+
+For every 4MA1 topic card, each button must link to the most relevant topic page, not a general homepage.
+
+Keep these buttons:
+
+Corbett
+Maths Genie
+Exam Papers Practice
+PMT
+
+Remove:
+
+Save My Exams
+
+The Exam Papers Practice base page for 4MA1 Higher topic questions is:
+
+[https://www.exampaperspractice.co.uk/igcse-edexcel-9-1-mathematics-a-4ma1-topic-questions-higher-level/](https://www.exampaperspractice.co.uk/igcse-edexcel-9-1-mathematics-a-4ma1-topic-questions-higher-level/)
+
+For Exam Papers Practice, link to the relevant topic section or topic page where possible. If there is no reliable direct anchor or page, link to the base topic questions page above.
+
+For Maths Genie, use topic-specific YesGenie or Maths Genie pages. Example format:
+
+[https://yesgenie.com/igcse/maths/edexcel/grade-4-4-17-averages-from-frequency-tables/worksheet](https://yesgenie.com/igcse/maths/edexcel/grade-4-4-17-averages-from-frequency-tables/worksheet)
+
+Important: do not link every topic to the same page. Each topic card should have its own best-matching topic URL.
+
+For Corbettmaths, link to the relevant Corbettmaths video/worksheet/practice page for that topic.
+
+For PMT, link to the relevant Physics & Maths Tutor topic page or topic question page for that topic.
+
+5. Add a URL field structure for topic links
+
+Please refactor the topic data so each topic has a links object like this:
+
+links: {
+corbett: "topic-specific URL",
+mathsGenie: "topic-specific URL",
+examPapersPractice: "topic-specific URL or base topic page",
+pmt: "topic-specific URL"
+}
+
+Then render only the links that exist.
+
+Do not render a button if the URL is blank, null, or "#".
+
+6. Apply this especially to 4MA1 first
+
+Start with IGCSE Mathematics A 4MA1 because this is the most student-facing section.
+
+For each topic card under:
+
+Number
+Algebra
+Geometry
+Statistics and Probability
+
+make sure the links match the topic.
+
+Examples:
+
+Ratio & proportion
+Corbett: ratio / proportion topic page
+Maths Genie: ratio / proportion topic page
+Exam Papers Practice: 4MA1 topic questions page or ratio topic page
+PMT: ratio / proportion topic questions page
+
+Percentages & financial maths
+Corbett: percentages / compound interest topic page
+Maths Genie: percentages / reverse percentages / compound interest topic page
+Exam Papers Practice: 4MA1 topic questions page or percentages topic page
+PMT: percentages / finance topic questions page
+
+Standard form
+Corbett: standard form topic page
+Maths Genie: standard form topic page
+Exam Papers Practice: 4MA1 topic questions page or standard form topic page
+PMT: standard form topic questions page
+
+Bounds & error intervals
+Corbett: bounds topic page
+Maths Genie: bounds / error intervals topic page
+Exam Papers Practice: 4MA1 topic questions page or bounds topic page
+PMT: bounds topic questions page
+
+Indices & surds
+Corbett: indices / surds topic page
+Maths Genie: indices / surds topic page
+Exam Papers Practice: 4MA1 topic questions page or indices and surds topic page
+PMT: indices / surds topic questions page
+
+Sets & Venn diagrams
+Corbett: Venn diagrams / set notation topic page
+Maths Genie: Venn diagrams topic page
+Exam Papers Practice: 4MA1 topic questions page or probability topic page
+PMT: Venn diagrams topic questions page
+
+Use the same logic for all remaining topics.
+
+7. For IAL and 4PM1 links
+
+For 4PM1 and IAL module topic/chapter practice, keep the same principle:
+
+Each chapter card should link to relevant PMT and ExamSolutions pages.
+Remove Save My Exams.
+Only include links that are directly useful for that chapter.
+Avoid generic homepages unless no better page exists.
+
+8. Update button labels
+
+Use these button labels:
+
+Corbett
+Maths Genie
+Exam Papers Practice
+PMT
+ExamSolutions
+
+Do not use inconsistent labels like “Open PMT” inside topic cards unless used on the Notes page.
+
+9. Keep Notes separate
+
+The Notes tab should remain as a notes page only.
+
+Keep PMT notes and other external revision note links there.
+
+Do not mix formula sheets and specifications into the Notes tab anymore.
+
+10. Quality check
+
+After making the changes, check:
+
+Topic Practice appears before Past Papers.
+Save My Exams no longer appears anywhere in topic practice.
+Formula Sheet and Specification no longer appear as top tabs.
+Formula sheets and Specifications appear in the left sidebar under Exam documents.
+4MA1 topic buttons no longer point to generic homepages.
+Buttons with missing URLs do not render.
+The layout still works on desktop and student laptop screens.
+
+One important note: YesGenie and Maths Genie are not always the same site. Please use the actual topic-specific URL if the current working source is yesgenie.com, but keep the button label as “Maths Genie” unless we decide to rename it later.
