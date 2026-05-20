@@ -1,0 +1,853 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Wellington Maths Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#F7F6F3;--surface:#FFFFFF;--surface2:#F0EEE9;--border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.14);
+  --ink:#1A1916;--ink2:#6B6860;--ink3:#A09E99;
+  --blue-bg:#E8F0FB;--blue-txt:#1A3F8F;--blue-bd:#C2D3F5;
+  --purple-bg:#EDEBFC;--purple-txt:#3D2FA8;--purple-bd:#CCC8F5;
+  --green-bg:#E6F4E6;--green-txt:#1E5C1E;--green-bd:#BFE0BF;
+  --amber-bg:#FBF2E0;--amber-txt:#7A4F00;--amber-bd:#F0D89A;
+  --red-bg:#FDECEA;--red-txt:#8B1A1A;--red-bd:#F5C0C0;
+  --teal-bg:#E2F4F1;--teal-txt:#0D5C52;--teal-bd:#A8DDD7;
+  --radius-sm:6px;--radius:10px;--radius-lg:16px;--sb-width:220px;
+  --font:'DM Sans',sans-serif;--mono:'DM Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--bg);color:var(--ink);font-size:14px;line-height:1.5;height:100vh;display:flex;overflow:hidden}
+a{color:inherit;text-decoration:none}
+button{font-family:var(--font);cursor:pointer}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:99px}
+
+/* SIDEBAR */
+.sb{width:var(--sb-width);min-width:var(--sb-width);background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;height:100vh;overflow-y:auto;padding-bottom:16px}
+.sb-logo{padding:20px 18px 18px;border-bottom:1px solid var(--border);margin-bottom:8px}
+.sb-logo-mark{display:flex;align-items:center;gap:8px}
+.sb-logo-icon{width:28px;height:28px;background:var(--ink);border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-family:var(--mono)}
+.sb-logo-name{font-size:13px;font-weight:500;letter-spacing:-0.01em}
+.sb-logo-sub{font-size:10px;color:var(--ink3);margin-top:2px}
+.sb-label{font-size:9px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink3);padding:10px 18px 4px}
+.sb-item{display:flex;align-items:center;gap:9px;padding:7px 18px;font-size:12.5px;color:var(--ink2);cursor:pointer;border-left:2px solid transparent;transition:background .12s,color .12s}
+.sb-item:hover{background:var(--surface2);color:var(--ink)}
+.sb-item.active{color:var(--ink);font-weight:500;background:var(--surface2);border-left-color:var(--ink)}
+.sb-item svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.sb-badge{margin-left:auto;font-size:9.5px;font-family:var(--mono);padding:1px 5px;border-radius:4px;background:var(--surface2);color:var(--ink3)}
+.sb-divider{height:1px;background:var(--border);margin:8px 18px}
+.sb-foot{margin-top:auto;padding:14px 18px 0;font-size:10.5px;color:var(--ink3);line-height:1.6}
+
+/* MAIN */
+.main{flex:1;height:100vh;overflow-y:auto;display:flex;flex-direction:column}
+.view{display:none;flex-direction:column;flex:1;animation:fadeUp .18s ease}
+.view.active{display:flex}
+@keyframes fadeUp{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+/* PAGE HEADER */
+.pg-header{background:var(--surface);border-bottom:1px solid var(--border);padding:20px 28px 0;flex-shrink:0}
+.pg-breadcrumb{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--ink3);margin-bottom:12px}
+.pg-breadcrumb a{color:var(--ink2);cursor:pointer}
+.pg-breadcrumb a:hover{color:var(--ink)}
+.pg-title-row{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.pg-title{font-size:17px;font-weight:500;letter-spacing:-0.02em}
+.pg-chip{font-size:10px;font-family:var(--mono);padding:3px 8px;border-radius:var(--radius-sm);border:1px solid var(--border2);color:var(--ink2);background:var(--surface)}
+.pg-chip.blue{background:var(--blue-bg);color:var(--blue-txt);border-color:var(--blue-bd)}
+.pg-chip.purple{background:var(--purple-bg);color:var(--purple-txt);border-color:var(--purple-bd)}
+.pg-chip.green{background:var(--green-bg);color:var(--green-txt);border-color:var(--green-bd)}
+.pg-chip.amber{background:var(--amber-bg);color:var(--amber-txt);border-color:var(--amber-bd)}
+
+/* TABS */
+.tabs{display:flex;gap:0;overflow-x:auto}
+.tab{padding:9px 16px;font-size:12.5px;color:var(--ink3);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .12s;white-space:nowrap}
+.tab:hover{color:var(--ink2)}
+.tab.active{color:var(--ink);font-weight:500;border-bottom-color:var(--ink)}
+.pg-body{padding:24px 28px;flex:1}
+
+/* HOME */
+.home-hero{background:var(--surface);border-bottom:1px solid var(--border);padding:32px 28px 28px}
+.home-title{font-size:22px;font-weight:500;letter-spacing:-0.03em;margin-bottom:4px}
+.home-sub{font-size:13px;color:var(--ink2);max-width:520px}
+.search-box{display:flex;align-items:center;gap:10px;margin-top:16px;max-width:520px;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius);padding:10px 14px}
+.search-box svg{width:15px;height:15px;stroke:var(--ink3);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.search-box input{border:none;background:transparent;font-family:var(--font);font-size:13px;color:var(--ink);outline:none;flex:1}
+.search-box input::placeholder{color:var(--ink3)}
+.prog-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px}
+.prog-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;cursor:pointer;transition:border-color .15s,box-shadow .15s}
+.prog-card:hover{border-color:var(--border2);box-shadow:0 2px 12px rgba(0,0,0,0.06)}
+.prog-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+.prog-icon svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.prog-card-title{font-size:13.5px;font-weight:500;letter-spacing:-0.01em;margin-bottom:2px}
+.prog-card-code{font-size:11px;font-family:var(--mono);color:var(--ink3);margin-bottom:6px}
+.prog-card-desc{font-size:11.5px;color:var(--ink2);margin-bottom:10px}
+.prog-tags{display:flex;flex-wrap:wrap;gap:4px}
+.prog-tag{font-size:10px;padding:2px 7px;border-radius:4px;font-family:var(--mono)}
+.ql-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:24px}
+.ql-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;cursor:pointer;transition:border-color .15s;display:flex;flex-direction:column;gap:6px}
+.ql-card:hover{border-color:var(--border2)}
+.ql-card svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.ql-title{font-size:12.5px;font-weight:500}
+.ql-sub{font-size:11px;color:var(--ink2)}
+.series-row{display:flex;gap:8px;flex-wrap:wrap}
+.series-chip{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;min-width:110px}
+.series-chip-label{font-size:9.5px;color:var(--ink3);font-family:var(--mono);margin-bottom:3px}
+.series-chip-val{font-size:13px;font-weight:500;letter-spacing:-0.01em}
+.section-label{font-size:10px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink3);margin-bottom:12px}
+
+/* FILTERS */
+.filter-row{display:flex;align-items:center;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.filter-label{font-size:11px;color:var(--ink3);margin-right:2px}
+.filter-chip{font-size:11.5px;padding:4px 11px;border-radius:99px;border:1px solid var(--border2);color:var(--ink2);background:var(--surface);cursor:pointer;transition:background .12s}
+.filter-chip:hover{background:var(--surface2)}
+.filter-chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+/* PAPERS TABLE */
+.papers-wrap{overflow-x:auto}
+.papers-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.papers-table thead th{text-align:left;padding:7px 10px;color:var(--ink3);font-weight:500;font-size:10.5px;border-bottom:1px solid var(--border);letter-spacing:0.03em;white-space:nowrap}
+.papers-table tbody tr{transition:background .1s}
+.papers-table tbody tr:hover{background:var(--surface2)}
+.papers-table td{padding:9px 10px;border-bottom:1px solid var(--border);vertical-align:middle;color:var(--ink2)}
+.papers-table td.year{font-weight:500;color:var(--ink);font-family:var(--mono);font-size:12px}
+.papers-table td.series{color:var(--ink)}
+.pill-wrap{display:flex;gap:5px;flex-wrap:wrap}
+.dl-pill{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;padding:3px 9px;border-radius:6px;cursor:pointer;transition:opacity .12s;font-family:var(--mono);text-decoration:none;white-space:nowrap}
+.dl-pill:hover{opacity:.8}
+.dl-pill.paper{background:var(--blue-bg);color:var(--blue-txt);border:1px solid var(--blue-bd)}
+.dl-pill.ms{background:var(--green-bg);color:var(--green-txt);border:1px solid var(--green-bd)}
+.dl-pill svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.table-note{font-size:11px;color:var(--ink3);margin-top:10px}
+
+/* MODULE GRID */
+.mod-group{margin-bottom:22px}
+.mod-group-hd{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.mod-group-name{font-size:10.5px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink3);white-space:nowrap}
+.mod-group-line{flex:1;height:1px;background:var(--border)}
+.mod-cards{display:flex;flex-wrap:wrap;gap:8px}
+.mod-card{width:78px;height:78px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:border-color .15s,box-shadow .15s;gap:2px}
+.mod-card:hover{border-color:var(--border2);box-shadow:0 2px 8px rgba(0,0,0,0.07)}
+.mod-card-name{font-size:16px;font-weight:500;letter-spacing:-0.02em}
+.mod-card-code{font-size:9px;font-family:var(--mono);color:var(--ink3)}
+.mod-card.pure{background:var(--blue-bg);border-color:var(--blue-bd)}
+.mod-card.pure .mod-card-name{color:var(--blue-txt)}
+.mod-card.pure .mod-card-code{color:var(--blue-txt);opacity:.7}
+.mod-card.fp{background:var(--purple-bg);border-color:var(--purple-bd)}
+.mod-card.fp .mod-card-name{color:var(--purple-txt)}
+.mod-card.fp .mod-card-code{color:var(--purple-txt);opacity:.7}
+.mod-card.stats{background:var(--green-bg);border-color:var(--green-bd)}
+.mod-card.stats .mod-card-name{color:var(--green-txt)}
+.mod-card.stats .mod-card-code{color:var(--green-txt);opacity:.7}
+.mod-card.applied{background:var(--amber-bg);border-color:var(--amber-bd)}
+.mod-card.applied .mod-card-name{color:var(--amber-txt)}
+.mod-card.applied .mod-card-code{color:var(--amber-txt);opacity:.7}
+.note-bar{display:flex;align-items:flex-start;gap:9px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;font-size:11.5px;color:var(--ink2);margin-bottom:20px;line-height:1.5}
+.note-bar svg{width:14px;height:14px;stroke:var(--ink3);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;margin-top:1px}
+
+/* ── TOPIC / CHAPTER PRACTICE ── */
+.search-topics{width:100%;max-width:460px;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius);padding:9px 14px;font-family:var(--font);font-size:13px;color:var(--ink);outline:none;margin-bottom:20px}
+.search-topics::placeholder{color:var(--ink3)}
+
+/* IGCSE 4MA1 strand-based */
+.strand-section{margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid var(--border)}
+.strand-section:last-child{border:none}
+.strand-title-row{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.strand-name{font-size:14px;font-weight:500;letter-spacing:-0.01em}
+.strand-pct{font-size:11px;font-family:var(--mono);padding:2px 8px;border-radius:4px}
+.strand-bar-wrap{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.strand-bar-bg{flex:1;height:4px;background:var(--surface2);border-radius:99px;overflow:hidden;max-width:300px}
+.strand-bar-fill{height:100%;border-radius:99px}
+.strand-bar-label{font-size:11px;color:var(--ink3);font-family:var(--mono);white-space:nowrap}
+.strand-desc{font-size:11.5px;color:var(--ink2);margin-bottom:14px;max-width:620px}
+.topic-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;margin-bottom:8px}
+.topic-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px}
+.topic-card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:6px}
+.topic-name{font-size:13px;font-weight:500;letter-spacing:-0.01em;line-height:1.3;flex:1;margin-right:8px}
+.freq-badge{font-size:9px;font-family:var(--mono);padding:2px 7px;border-radius:4px;white-space:nowrap;flex-shrink:0;margin-top:1px}
+.freq-very-high{background:#FEE2E2;color:#7F1D1D}
+.freq-high{background:var(--amber-bg);color:var(--amber-txt)}
+.freq-medium{background:var(--blue-bg);color:var(--blue-txt)}
+.freq-low{background:var(--surface2);color:var(--ink3)}
+.topic-note{font-size:11px;color:var(--ink2);margin-bottom:10px;line-height:1.4}
+.topic-links{display:flex;gap:5px;flex-wrap:wrap}
+.topic-link{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;padding:3px 8px;border-radius:5px;border:1px solid var(--border2);color:var(--ink2);cursor:pointer;transition:background .1s;text-decoration:none;font-family:var(--mono)}
+.topic-link:hover{background:var(--surface2)}
+.topic-link svg{width:10px;height:10px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.topic-link.corbett{background:var(--red-bg);color:var(--red-txt);border-color:var(--red-bd)}
+.topic-link.genie{background:var(--blue-bg);color:var(--blue-txt);border-color:var(--blue-bd)}
+.topic-link.epp{background:var(--purple-bg);color:var(--purple-txt);border-color:var(--purple-bd)}
+.topic-link.sme{background:var(--green-bg);color:var(--green-txt);border-color:var(--green-bd)}
+.topic-link.pmt{background:var(--teal-bg);color:var(--teal-txt);border-color:var(--teal-bd)}
+.freq-legend{display:flex;align-items:center;gap:16px;margin-bottom:20px;flex-wrap:wrap;padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);font-size:11px;color:var(--ink2)}
+.freq-legend-title{font-size:11px;font-weight:500;color:var(--ink);margin-right:4px}
+.freq-legend-item{display:flex;align-items:center;gap:5px}
+.freq-dot{width:8px;height:8px;border-radius:2px}
+
+/* Chapter-based (4PM1 + IAL) */
+.ch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.ch-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.ch-num{font-size:9px;font-family:var(--mono);color:var(--ink3);font-weight:500;letter-spacing:0.06em;text-transform:uppercase}
+.ch-name{font-size:13px;font-weight:500;letter-spacing:-0.01em;line-height:1.3}
+.ch-links{display:flex;gap:5px;flex-wrap:wrap}
+/* freq badge inside chapter card (4PM1 only) */
+.ch-card-top{display:flex;align-items:flex-start;justify-content:space-between}
+.ch-card-top .topic-name{margin-right:8px}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sb">
+  <div class="sb-logo">
+    <div class="sb-logo-mark">
+      <div class="sb-logo-icon">∑</div>
+      <div><div class="sb-logo-name">Maths Hub</div></div>
+    </div>
+    <div class="sb-logo-sub">Wellington College Bangkok</div>
+  </div>
+  <div class="sb-label">IGCSE</div>
+  <div class="sb-item active" data-view="home" onclick="nav('home')">
+    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home
+  </div>
+  <div class="sb-item" data-view="igcse-4ma1" onclick="nav('igcse-4ma1')">
+    <svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="16" y2="11"/><line x1="8" y1="15" x2="13" y2="15"/></svg>
+    Mathematics A <span class="sb-badge">4MA1</span>
+  </div>
+  <div class="sb-item" data-view="igcse-4pm1" onclick="nav('igcse-4pm1')">
+    <svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="16" y2="11"/><line x1="8" y1="15" x2="13" y2="15"/></svg>
+    Further Pure <span class="sb-badge">4PM1</span>
+  </div>
+  <div class="sb-divider"></div>
+  <div class="sb-label">IAL</div>
+  <div class="sb-item" data-view="ial-maths" onclick="nav('ial-maths')">
+    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+    Mathematics <span class="sb-badge">6 units</span>
+  </div>
+  <div class="sb-item" data-view="ial-fm" onclick="nav('ial-fm')">
+    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+    Further Maths <span class="sb-badge">12 units</span>
+  </div>
+  <div class="sb-divider"></div>
+  <div class="sb-label">Tools</div>
+  <div class="sb-item"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Search all papers</div>
+  <div class="sb-item"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Exam timetable</div>
+  <div class="sb-foot">Maths Department · 2025–26<br>Resources © their respective owners.</div>
+</nav>
+
+<main class="main">
+
+<!-- HOME -->
+<div class="view active" id="view-home">
+  <div class="home-hero">
+    <div class="home-title">Maths Revision Hub</div>
+    <div class="home-sub">Past papers, mark schemes, topic practice, notes and formula sheets for IGCSE and IAL Mathematics.</div>
+    <div class="search-box"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" placeholder="Search topics, unit codes, paper years…"/></div>
+  </div>
+  <div class="pg-body">
+    <div class="section-label">Choose your programme</div>
+    <div class="prog-grid">
+      <div class="prog-card" onclick="nav('igcse-4ma1')">
+        <div class="prog-icon" style="background:var(--blue-bg);color:var(--blue-txt)"><svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="16" y2="11"/><line x1="8" y1="15" x2="13" y2="15"/></svg></div>
+        <div class="prog-card-title">IGCSE Mathematics A</div>
+        <div class="prog-card-code">Edexcel · 4MA1 · Higher tier</div>
+        <div class="prog-card-desc">2 papers per series · Years 10–11</div>
+        <div class="prog-tags"><span class="prog-tag" style="background:var(--blue-bg);color:var(--blue-txt)">Papers</span><span class="prog-tag" style="background:var(--amber-bg);color:var(--amber-txt)">Topic practice</span><span class="prog-tag" style="background:var(--green-bg);color:var(--green-txt)">Mark schemes</span></div>
+      </div>
+      <div class="prog-card" onclick="nav('igcse-4pm1')">
+        <div class="prog-icon" style="background:var(--purple-bg);color:var(--purple-txt)"><svg viewBox="0 0 24 24"><line x1="12" y1="2" x2="12" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+        <div class="prog-card-title">IGCSE Further Pure Maths</div>
+        <div class="prog-card-code">Edexcel · 4PM1 · Single tier</div>
+        <div class="prog-card-desc">2 papers per series · Years 10–11</div>
+        <div class="prog-tags"><span class="prog-tag" style="background:var(--purple-bg);color:var(--purple-txt)">Papers</span><span class="prog-tag" style="background:var(--amber-bg);color:var(--amber-txt)">Topic practice</span><span class="prog-tag" style="background:var(--green-bg);color:var(--green-txt)">Mark schemes</span></div>
+      </div>
+      <div class="prog-card" onclick="nav('ial-maths')">
+        <div class="prog-icon" style="background:var(--green-bg);color:var(--green-txt)"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+        <div class="prog-card-title">IAL Mathematics</div>
+        <div class="prog-card-code">Edexcel · 6 modules</div>
+        <div class="prog-card-desc">P1–P4, S1, D1 or M1 · Years 12–13</div>
+        <div class="prog-tags"><span class="prog-tag" style="background:var(--blue-bg);color:var(--blue-txt)">Pure</span><span class="prog-tag" style="background:var(--green-bg);color:var(--green-txt)">Statistics</span><span class="prog-tag" style="background:var(--amber-bg);color:var(--amber-txt)">Applied</span></div>
+      </div>
+      <div class="prog-card" onclick="nav('ial-fm')">
+        <div class="prog-icon" style="background:var(--amber-bg);color:var(--amber-txt)"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+        <div class="prog-card-title">IAL Further Mathematics</div>
+        <div class="prog-card-code">Edexcel · 12 modules</div>
+        <div class="prog-card-desc">P1–P4, FP1, FP2, S1–S3, D1, M1–M2</div>
+        <div class="prog-tags"><span class="prog-tag" style="background:var(--blue-bg);color:var(--blue-txt)">Pure</span><span class="prog-tag" style="background:var(--purple-bg);color:var(--purple-txt)">FP</span><span class="prog-tag" style="background:var(--green-bg);color:var(--green-txt)">Stats</span><span class="prog-tag" style="background:var(--amber-bg);color:var(--amber-txt)">Applied</span></div>
+      </div>
+    </div>
+    <div class="section-label">Quick access</div>
+    <div class="ql-grid" style="margin-bottom:24px">
+      <div class="ql-card"><svg style="color:var(--blue-txt)" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><div class="ql-title">All past papers</div><div class="ql-sub">Every series, all programmes</div></div>
+      <div class="ql-card"><svg style="color:var(--amber-txt)" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg><div class="ql-title">Formula sheets</div><div class="ql-sub">Hosted PDFs, per unit</div></div>
+      <div class="ql-card"><svg style="color:var(--green-txt)" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg><div class="ql-title">Specifications</div><div class="ql-sub">Official Edexcel syllabuses</div></div>
+    </div>
+    <div class="section-label">Exam series</div>
+    <div class="series-row">
+      <div class="series-chip"><div class="series-chip-label">NEXT SERIES</div><div class="series-chip-val">January 2026</div></div>
+      <div class="series-chip"><div class="series-chip-label">FOLLOWING</div><div class="series-chip-val">June 2026</div></div>
+      <div class="series-chip"><div class="series-chip-label">IGCSE</div><div class="series-chip-val">4MA1 · 4PM1</div></div>
+      <div class="series-chip"><div class="series-chip-label">IAL UNITS</div><div class="series-chip-val">All modules</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- IGCSE 4MA1 -->
+<div class="view" id="view-igcse-4ma1">
+  <div class="pg-header">
+    <div class="pg-breadcrumb"><a onclick="nav('home')">Home</a><span>›</span><span>IGCSE Mathematics A</span></div>
+    <div class="pg-title-row"><div class="pg-title">IGCSE Mathematics A</div><span class="pg-chip blue">4MA1</span><span class="pg-chip">Edexcel</span><span class="pg-chip">Higher tier</span></div>
+    <div class="tabs" id="tabs-4ma1">
+      <div class="tab active" onclick="switchTab(this,'4ma1','papers')">Past papers</div>
+      <div class="tab" onclick="switchTab(this,'4ma1','topics')">Topic practice</div>
+      <div class="tab" onclick="switchTab(this,'4ma1','notes')">Notes</div>
+      <div class="tab" onclick="switchTab(this,'4ma1','formula')">Formula sheet</div>
+      <div class="tab" onclick="switchTab(this,'4ma1','spec')">Specification</div>
+    </div>
+  </div>
+  <div class="pg-body">
+    <div id="4ma1-papers">
+      <div class="filter-row"><span class="filter-label">Series:</span><span class="filter-chip on" onclick="filterSeries(this,'4ma1','all')">All</span><span class="filter-chip" onclick="filterSeries(this,'4ma1','jan')">January</span><span class="filter-chip" onclick="filterSeries(this,'4ma1','jun')">June</span><span class="filter-chip" onclick="filterSeries(this,'4ma1','nov')">November</span></div>
+      <div class="papers-wrap"><table class="papers-table"><thead><tr><th style="width:60px">Year</th><th style="width:100px">Series</th><th>Paper 1H</th><th>Paper 2H</th></tr></thead><tbody id="tbody-4ma1"></tbody></table></div>
+      <div class="table-note">Sources: <a href="https://www.paperlords.org/igcse" target="_blank" rel="noopener" style="color:var(--ink2);text-decoration:underline;text-underline-offset:2px">Paperlords</a> · Pearson Edexcel.</div>
+    </div>
+    <div id="4ma1-topics" style="display:none">
+      <input class="search-topics" id="topic-search-4ma1" placeholder="Filter topics, e.g. trigonometry, quadratic, vectors…" oninput="filterTopics('4ma1',this.value)"/>
+      <div class="freq-legend"><span class="freq-legend-title">Frequency in exam:</span><span class="freq-legend-item"><span class="freq-dot" style="background:#EF4444"></span>Very high — guaranteed almost every paper</span><span class="freq-legend-item"><span class="freq-dot" style="background:#F59E0B"></span>High — most series</span><span class="freq-legend-item"><span class="freq-dot" style="background:#3B82F6"></span>Medium — roughly half</span><span class="freq-legend-item"><span class="freq-dot" style="background:#9CA3AF"></span>Low — occasional</span></div>
+      <div id="topics-4ma1"></div>
+    </div>
+    <div id="4ma1-notes" style="display:none"><div class="note-bar"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>Upload your hosted revision notes as PDFs and link them here. External links below.</div>
+      <div class="ch-grid"><div class="ch-card"><div class="ch-name">Physics &amp; Maths Tutor — IGCSE notes</div><div class="ch-links"><a class="topic-link pmt" href="https://www.physicsandmathstutor.com/maths-revision/igcse-edexcel/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Open PMT</a></div></div><div class="ch-card"><div class="ch-name">Save My Exams — revision notes</div><div class="ch-links"><a class="topic-link sme" href="https://www.savemyexams.com/igcse/maths/edexcel/a/17/revision-notes/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Open SME</a></div></div></div>
+    </div>
+    <div id="4ma1-formula" style="display:none"><div class="note-bar"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>Link your hosted formula sheet PDF here.</div></div>
+    <div id="4ma1-spec" style="display:none"><div class="ch-grid"><div class="ch-card"><div class="ch-name">Official specification (2016–)</div><div class="ch-links"><a class="topic-link pmt" href="https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Mathematics%20A/2016/Specification%20and%20sample%20assessments/international-gcse-in-mathematics-spec-a.pdf" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download PDF</a></div></div></div></div>
+  </div>
+</div>
+
+<!-- IGCSE 4PM1 -->
+<div class="view" id="view-igcse-4pm1">
+  <div class="pg-header">
+    <div class="pg-breadcrumb"><a onclick="nav('home')">Home</a><span>›</span><span>IGCSE Further Pure Maths</span></div>
+    <div class="pg-title-row"><div class="pg-title">IGCSE Further Pure Maths</div><span class="pg-chip purple">4PM1</span><span class="pg-chip">Edexcel</span><span class="pg-chip">Single tier</span></div>
+    <div class="tabs" id="tabs-4pm1">
+      <div class="tab active" onclick="switchTab(this,'4pm1','papers')">Past papers</div>
+      <div class="tab" onclick="switchTab(this,'4pm1','topics')">Topic practice</div>
+      <div class="tab" onclick="switchTab(this,'4pm1','formula')">Formula sheet</div>
+      <div class="tab" onclick="switchTab(this,'4pm1','spec')">Specification</div>
+    </div>
+  </div>
+  <div class="pg-body">
+    <div id="4pm1-papers">
+      <div class="filter-row"><span class="filter-label">Series:</span><span class="filter-chip on" onclick="filterSeries(this,'4pm1','all')">All</span><span class="filter-chip" onclick="filterSeries(this,'4pm1','jan')">January</span><span class="filter-chip" onclick="filterSeries(this,'4pm1','jun')">June</span></div>
+      <div class="papers-wrap"><table class="papers-table"><thead><tr><th style="width:60px">Year</th><th style="width:100px">Series</th><th>Paper 1</th><th>Paper 2</th></tr></thead><tbody id="tbody-4pm1"></tbody></table></div>
+      <div class="table-note">Sources: <a href="https://www.paperlords.org/igcse" target="_blank" rel="noopener" style="color:var(--ink2);text-decoration:underline;text-underline-offset:2px">Paperlords</a> · Pearson Edexcel.</div>
+    </div>
+    <div id="4pm1-topics" style="display:none">
+      <input class="search-topics" id="topic-search-4pm1" placeholder="Filter chapters…" oninput="filterChapters('4pm1',this.value)"/>
+      <div class="freq-legend"><span class="freq-legend-title">Frequency in exam:</span><span class="freq-legend-item"><span class="freq-dot" style="background:#EF4444"></span>Very high</span><span class="freq-legend-item"><span class="freq-dot" style="background:#F59E0B"></span>High</span><span class="freq-legend-item"><span class="freq-dot" style="background:#3B82F6"></span>Medium</span><span class="freq-legend-item"><span class="freq-dot" style="background:#9CA3AF"></span>Low</span></div>
+      <div class="ch-grid" id="chapters-4pm1"></div>
+    </div>
+    <div id="4pm1-formula" style="display:none"><div class="note-bar"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>Link your hosted formula sheet PDF here. The official Edexcel formula sheet is also provided in both exam papers.</div></div>
+    <div id="4pm1-spec" style="display:none"><div class="ch-card"><div class="ch-name">Official specification (2016–)</div><div class="ch-links"><a class="topic-link pmt" href="https://qualifications.pearson.com/content/dam/pdf/International%20GCSE/Further%20Pure%20Mathematics/2016/Specification%20and%20sample%20assessments/international-gcse-in-further-pure-mathematics-spec.pdf" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download PDF</a></div></div></div>
+  </div>
+</div>
+
+<!-- IAL MATHS -->
+<div class="view" id="view-ial-maths">
+  <div class="pg-header">
+    <div class="pg-breadcrumb"><a onclick="nav('home')">Home</a><span>›</span><span>IAL Mathematics</span></div>
+    <div class="pg-title-row"><div class="pg-title">IAL Mathematics</div><span class="pg-chip green">6 modules</span><span class="pg-chip">Edexcel</span></div>
+  </div>
+  <div class="pg-body">
+    <div class="note-bar"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>P1–P4 papers are shared with IAL Further Maths — same unit exams, same resources.</div>
+    <div class="mod-group"><div class="mod-group-hd"><span class="mod-group-name">Pure</span><div class="mod-group-line"></div></div>
+      <div class="mod-cards">
+        <div class="mod-card pure" onclick="openModule('P1','WMA11','pure','ial-maths')"><div class="mod-card-name">P1</div><div class="mod-card-code">WMA11</div></div>
+        <div class="mod-card pure" onclick="openModule('P2','WMA12','pure','ial-maths')"><div class="mod-card-name">P2</div><div class="mod-card-code">WMA12</div></div>
+        <div class="mod-card pure" onclick="openModule('P3','WMA13','pure','ial-maths')"><div class="mod-card-name">P3</div><div class="mod-card-code">WMA13</div></div>
+        <div class="mod-card pure" onclick="openModule('P4','WMA14','pure','ial-maths')"><div class="mod-card-name">P4</div><div class="mod-card-code">WMA14</div></div>
+      </div>
+    </div>
+    <div class="mod-group"><div class="mod-group-hd"><span class="mod-group-name">Statistics</span><div class="mod-group-line"></div></div>
+      <div class="mod-cards"><div class="mod-card stats" onclick="openModule('S1','WST01','stats','ial-maths')"><div class="mod-card-name">S1</div><div class="mod-card-code">WST01</div></div></div>
+    </div>
+    <div class="mod-group"><div class="mod-group-hd"><span class="mod-group-name">Applied — your choice</span><div class="mod-group-line"></div></div>
+      <div class="mod-cards">
+        <div class="mod-card applied" onclick="openModule('D1','WDM11','applied','ial-maths')"><div class="mod-card-name">D1</div><div class="mod-card-code">WDM11</div></div>
+        <div class="mod-card applied" onclick="openModule('M1','WME01','applied','ial-maths')"><div class="mod-card-name">M1</div><div class="mod-card-code">WME01</div></div>
+      </div>
+    </div>
+    <div class="table-note" style="margin-top:8px">Click any module to view its past papers, chapter practice, notes and formula sheet.</div>
+  </div>
+</div>
+
+<!-- IAL FURTHER MATHS -->
+<div class="view" id="view-ial-fm">
+  <div class="pg-header">
+    <div class="pg-breadcrumb"><a onclick="nav('home')">Home</a><span>›</span><span>IAL Further Mathematics</span></div>
+    <div class="pg-title-row"><div class="pg-title">IAL Further Mathematics</div><span class="pg-chip amber">12 modules</span><span class="pg-chip">Edexcel</span></div>
+  </div>
+  <div class="pg-body">
+    <div class="note-bar"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>P1–P4 are shared with IAL Maths. FP1 and FP2 are unique to Further Maths.</div>
+    <div class="mod-group"><div class="mod-group-hd"><span class="mod-group-name">Pure — shared with IAL Maths</span><div class="mod-group-line"></div></div>
+      <div class="mod-cards">
+        <div class="mod-card pure" onclick="openModule('P1','WMA11','pure','ial-fm')"><div class="mod-card-name">P1</div><div class="mod-card-code">WMA11</div></div>
+        <div class="mod-card pure" onclick="openModule('P2','WMA12','pure','ial-fm')"><div class="mod-card-name">P2</div><div class="mod-card-code">WMA12</div></div>
+        <div class="mod-card pure" onclick="openModule('P3','WMA13','pure','ial-fm')"><div class="mod-card-name">P3</div><div class="mod-card-code">WMA13</div></div>
+        <div class="mod-card pure" onclick="openModule('P4','WMA14','pure','ial-fm')"><div class="mod-card-name">P4</div><div class="mod-card-code">WMA14</div></div>
+        <div class="mod-card fp" onclick="openModule('FP1','WFM01','fp','ial-fm')"><div class="mod-card-name">FP1</div><div class="mod-card-code">WFM01</div></div>
+        <div class="mod-card fp" onclick="openModule('FP2','WFM02','fp','ial-fm')"><div class="mod-card-name">FP2</div><div class="mod-card-code">WFM02</div></div>
+      </div>
+    </div>
+    <div class="mod-group"><div class="mod-group-hd"><span class="mod-group-name">Statistics</span><div class="mod-group-line"></div></div>
+      <div class="mod-cards">
+        <div class="mod-card stats" onclick="openModule('S1','WST01','stats','ial-fm')"><div class="mod-card-name">S1</div><div class="mod-card-code">WST01</div></div>
+        <div class="mod-card stats" onclick="openModule('S2','WST02','stats','ial-fm')"><div class="mod-card-name">S2</div><div class="mod-card-code">WST02</div></div>
+        <div class="mod-card stats" onclick="openModule('S3','WST03','stats','ial-fm')"><div class="mod-card-name">S3</div><div class="mod-card-code">WST03</div></div>
+      </div>
+    </div>
+    <div class="mod-group"><div class="mod-group-hd"><span class="mod-group-name">Applied</span><div class="mod-group-line"></div></div>
+      <div class="mod-cards">
+        <div class="mod-card applied" onclick="openModule('D1','WDM11','applied','ial-fm')"><div class="mod-card-name">D1</div><div class="mod-card-code">WDM11</div></div>
+        <div class="mod-card applied" onclick="openModule('M1','WME01','applied','ial-fm')"><div class="mod-card-name">M1</div><div class="mod-card-code">WME01</div></div>
+        <div class="mod-card applied" onclick="openModule('M2','WME02','applied','ial-fm')"><div class="mod-card-name">M2</div><div class="mod-card-code">WME02</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- IAL MODULE DETAIL -->
+<div class="view" id="view-module-detail">
+  <div class="pg-header">
+    <div class="pg-breadcrumb"><a onclick="nav('home')">Home</a><span>›</span><a id="mod-parent-link">IAL Maths</a><span>›</span><span id="mod-bc-name">P1</span></div>
+    <div class="pg-title-row"><div class="pg-title" id="mod-detail-title">P1 — Pure Mathematics 1</div><span class="pg-chip blue" id="mod-detail-code">WMA11</span><span class="pg-chip">Edexcel IAL</span></div>
+    <div class="tabs" id="tabs-mod">
+      <div class="tab active" onclick="switchTab(this,'mod','papers')">Past papers</div>
+      <div class="tab" onclick="switchTab(this,'mod','topics')">Chapter practice</div>
+      <div class="tab" onclick="switchTab(this,'mod','formula')">Formula sheet</div>
+      <div class="tab" onclick="switchTab(this,'mod','spec')">Specification</div>
+    </div>
+  </div>
+  <div class="pg-body">
+    <div id="mod-papers">
+      <div class="filter-row"><span class="filter-label">Series:</span><span class="filter-chip on" onclick="filterSeries(this,'mod','all')">All</span><span class="filter-chip" onclick="filterSeries(this,'mod','jan')">January</span><span class="filter-chip" onclick="filterSeries(this,'mod','jun')">June</span><span class="filter-chip" onclick="filterSeries(this,'mod','oct')">October</span></div>
+      <div class="papers-wrap"><table class="papers-table" id="tbl-mod"><thead><tr><th style="width:60px">Year</th><th style="width:100px">Series</th><th>Question paper</th><th>Mark scheme</th></tr></thead><tbody id="tbody-mod"></tbody></table></div>
+      <div class="table-note">Sources: <a href="https://www.paperlords.org" target="_blank" rel="noopener" style="color:var(--ink2);text-decoration:underline;text-underline-offset:2px">Paperlords</a> · Pearson Edexcel.</div>
+    </div>
+    <div id="mod-topics" style="display:none">
+      <input class="search-topics" id="mod-chapter-search" placeholder="Filter chapters…" oninput="filterChapters('mod',this.value)"/>
+      <div class="ch-grid" id="chapters-mod"></div>
+    </div>
+    <div id="mod-formula" style="display:none"><div class="note-bar"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>Upload the formula booklet for this unit and link it here.</div></div>
+    <div id="mod-spec" style="display:none"><div class="note-bar"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>Link to the official IAL specification PDF here.</div></div>
+  </div>
+</div>
+
+</main>
+
+<script>
+/* ════════════════════════════
+   IGCSE PAPERS DATA
+════════════════════════════ */
+const PAPERS={
+  '4ma1':[
+    {year:2024,series:'January',s:'jan',p1:'https://www.paperlords.org/igcse',ms1:'#',p2:'https://www.paperlords.org/igcse',ms2:'#'},
+    {year:2023,series:'November',s:'nov',p1:'https://www.paperlords.org/igcse',ms1:'#',p2:'https://www.paperlords.org/igcse',ms2:'#'},
+    {year:2023,series:'June',s:'jun',p1:'https://www.paperlords.org/igcse',ms1:'#',p2:'https://www.paperlords.org/igcse',ms2:'#'},
+    {year:2023,series:'January',s:'jan',p1:'https://www.paperlords.org/igcse',ms1:'#',p2:'https://www.paperlords.org/igcse',ms2:'#'},
+    {year:2022,series:'November',s:'nov',p1:'https://www.paperlords.org/igcse',ms1:'#',p2:'https://www.paperlords.org/igcse',ms2:'#'},
+    {year:2022,series:'June',s:'jun',p1:'https://www.paperlords.org/igcse',ms1:'#',p2:'https://www.paperlords.org/igcse',ms2:'#'},
+    {year:2022,series:'January',s:'jan',p1:'https://www.paperlords.org/igcse',ms1:'#',p2:'https://www.paperlords.org/igcse',ms2:'#'},
+    {year:2020,series:'January',s:'jan',p1:'https://www.paperlords.org/igcse',ms1:'#',p2:'https://www.paperlords.org/igcse',ms2:'#'},
+    {year:2019,series:'November',s:'nov',p1:'https://www.paperlords.org/igcse',ms1:'#',p2:'https://www.paperlords.org/igcse',ms2:'#'},
+    {year:2019,series:'June',s:'jun',p1:'https://www.paperlords.org/igcse',ms1:'#',p2:'https://www.paperlords.org/igcse',ms2:'#'},
+    {year:2019,series:'January',s:'jan',p1:'https://www.paperlords.org/igcse',ms1:'#',p2:'https://www.paperlords.org/igcse',ms2:'#'},
+    {year:2018,series:'November',s:'nov',p1:'https://www.paperlords.org/igcse',ms1:'#',p2:'https://www.paperlords.org/igcse',ms2:'#'},
+    {year:2018,series:'June',s:'jun',p1:'https://www.paperlords.org/igcse',ms1:'#',p2:'https://www.paperlords.org/igcse',ms2:'#'},
+  ],
+  '4pm1':[
+    {year:2024,series:'January',s:'jan',p1:'https://www.paperlords.org/igcse',ms1:'#',p2:'https://www.paperlords.org/igcse',ms2:'#'},
+    {year:2023,series:'June',s:'jun',p1:'https://www.paperlords.org/igcse',ms1:'#',p2:'https://www.paperlords.org/igcse',ms2:'#'},
+    {year:2023,series:'January',s:'jan',p1:'https://www.paperlords.org/igcse',ms1:'#',p2:'https://www.paperlords.org/igcse',ms2:'#'},
+    {year:2022,series:'June',s:'jun',p1:'https://www.paperlords.org/igcse',ms1:'#',p2:'https://www.paperlords.org/igcse',ms2:'#'},
+    {year:2022,series:'January',s:'jan',p1:'https://www.paperlords.org/igcse',ms1:'#',p2:'https://www.paperlords.org/igcse',ms2:'#'},
+    {year:2019,series:'June',s:'jun',p1:'https://www.paperlords.org/igcse',ms1:'#',p2:'https://www.paperlords.org/igcse',ms2:'#'},
+  ]
+};
+
+/* ════════════════════════════
+   IAL MODULE INFO & PAPERS
+════════════════════════════ */
+const MODULE_INFO={
+  P1:{title:'P1 — Pure Mathematics 1',code:'WMA11',color:'blue',papers:[
+    {year:2024,series:'January',s:'jan',p:'https://www.paperlords.org',ms:'#'},
+    {year:2023,series:'October',s:'oct',p:'https://www.paperlords.org',ms:'#'},
+    {year:2023,series:'June',s:'jun',p:'https://www.paperlords.org',ms:'#'},
+    {year:2023,series:'January',s:'jan',p:'https://www.paperlords.org',ms:'#'},
+    {year:2022,series:'October',s:'oct',p:'https://www.paperlords.org',ms:'#'},
+    {year:2022,series:'June',s:'jun',p:'https://www.paperlords.org',ms:'#'},
+    {year:2021,series:'October',s:'oct',p:'https://www.paperlords.org',ms:'#'},
+    {year:2021,series:'June',s:'jun',p:'https://www.paperlords.org',ms:'#'},
+    {year:2021,series:'January',s:'jan',p:'https://www.paperlords.org',ms:'#'},
+  ]},
+  P2:{title:'P2 — Pure Mathematics 2',code:'WMA12',color:'blue',papers:[]},
+  P3:{title:'P3 — Pure Mathematics 3',code:'WMA13',color:'blue',papers:[]},
+  P4:{title:'P4 — Pure Mathematics 4',code:'WMA14',color:'blue',papers:[]},
+  FP1:{title:'FP1 — Further Pure Mathematics 1',code:'WFM01',color:'purple',papers:[]},
+  FP2:{title:'FP2 — Further Pure Mathematics 2',code:'WFM02',color:'purple',papers:[]},
+  S1:{title:'S1 — Statistics 1',code:'WST01',color:'green',papers:[]},
+  S2:{title:'S2 — Statistics 2',code:'WST02',color:'green',papers:[]},
+  S3:{title:'S3 — Statistics 3',code:'WST03',color:'green',papers:[]},
+  D1:{title:'D1 — Decision Mathematics 1',code:'WDM11',color:'amber',papers:[]},
+  M1:{title:'M1 — Mechanics 1',code:'WME01',color:'amber',papers:[]},
+  M2:{title:'M2 — Mechanics 2',code:'WME02',color:'amber',papers:[]},
+};
+
+/* ════════════════════════════
+   4MA1 TOPIC DATA (strand-based, with frequency)
+════════════════════════════ */
+const TOPICS_4MA1=[
+  {strand:'Number',strandPct:22,strandColor:'#F59E0B',strandFill:'#FBF2E0',
+   strandDesc:'Roughly 22% of marks. Ratio, proportion and financial maths carry the most marks. Standard form and bounds appear almost every series.',
+   topics:[
+    {name:'Ratio & proportion',freq:'very-high',pct:'~8–10%',note:'Real-life contexts: recipes, best buys, currency, mixing. Multi-step ratio problems appear in both papers.',corbett:'https://corbettmaths.com/contents/#r',genie:'https://www.mathsgenie.co.uk/igcse/maths/edexcel/worksheet',epp:'https://www.exampaperspractice.co.uk/igcse-edexcel-9-1-mathematics-a-4ma1-topic-questions-higher-level/',sme:'https://www.savemyexams.com/igcse/maths/edexcel/a/17/topic-questions/1-number/1-3-ratio-proportion/',pmt:'https://www.physicsandmathstutor.com/maths-revision/igcse-edexcel/'},
+    {name:'Percentages & financial maths',freq:'very-high',pct:'~6–8%',note:'Compound interest, reverse percentage, percentage change. Easy to mis-read the question.',corbett:'https://corbettmaths.com/contents/#p',genie:'https://www.mathsgenie.co.uk/igcse/maths/edexcel/worksheet',epp:'https://www.exampaperspractice.co.uk/igcse-edexcel-9-1-mathematics-a-4ma1-topic-questions-higher-level/',sme:'https://www.savemyexams.com/igcse/maths/edexcel/a/17/topic-questions/1-number/1-2-fractions-decimals-percentages/',pmt:'https://www.physicsandmathstutor.com/maths-revision/igcse-edexcel/'},
+    {name:'Standard form',freq:'high',pct:'~3–4%',note:'Usually 1–2 questions per paper. Calculating in standard form and converting.',corbett:'https://corbettmaths.com/contents/#s',genie:'https://www.mathsgenie.co.uk/igcse/maths/edexcel/worksheet',epp:'https://www.exampaperspractice.co.uk/igcse-edexcel-9-1-mathematics-a-4ma1-topic-questions-higher-level/',sme:'https://www.savemyexams.com/igcse/maths/edexcel/a/17/topic-questions/1-number/1-5-standard-form/',pmt:'https://www.physicsandmathstutor.com/maths-revision/igcse-edexcel/'},
+    {name:'Bounds & error intervals',freq:'high',pct:'~2–3%',note:'Truncation vs rounding. Upper/lower bounds in calculations. Usually 3–4 marks when it appears.',corbett:'https://corbettmaths.com/contents/#b',genie:'https://www.mathsgenie.co.uk/igcse/maths/edexcel/worksheet',epp:'https://www.exampaperspractice.co.uk/igcse-edexcel-9-1-mathematics-a-4ma1-topic-questions-higher-level/',sme:'https://www.savemyexams.com/igcse/maths/edexcel/a/17/topic-questions/1-number/1-6-bounds/',pmt:'https://www.physicsandmathstutor.com/maths-revision/igcse-edexcel/'},
+    {name:'Indices & surds',freq:'high',pct:'~2–3%',note:'Fractional and negative indices, simplifying surds, rationalising the denominator.',corbett:'https://corbettmaths.com/contents/#i',genie:'https://www.mathsgenie.co.uk/igcse/maths/edexcel/worksheet',epp:'https://www.exampaperspractice.co.uk/igcse-edexcel-9-1-mathematics-a-4ma1-topic-questions-higher-level/',sme:'https://www.savemyexams.com/igcse/maths/edexcel/a/17/topic-questions/1-number/1-7-indices-surds/',pmt:'https://www.physicsandmathstutor.com/maths-revision/igcse-edexcel/'},
+    {name:'Sets & Venn diagrams',freq:'medium',pct:'~2%',note:'Usually appears in the probability context. Union, intersection, complement.',corbett:'https://corbettmaths.com/contents/#s',genie:'https://www.mathsgenie.co.uk/igcse/maths/edexcel/worksheet',epp:'https://www.exampaperspractice.co.uk/igcse-edexcel-9-1-mathematics-a-4ma1-topic-questions-higher-level/',sme:'https://www.savemyexams.com/igcse/maths/edexcel/a/17/topic-questions/',pmt:'https://www.physicsandmathstutor.com/maths-revision/igcse-edexcel/'},
+  ]},
+  {strand:'Algebra',strandPct:32,strandColor:'#3B82F6',strandFill:'#EFF6FF',
+   strandDesc:'Roughly 32% of marks — the largest single strand. Quadratics, sequences and graphs are the biggest sub-topics.',
+   topics:[
+    {name:'Quadratic equations',freq:'very-high',pct:'~6–8%',note:'Factorising, quadratic formula, completing the square. Often 6–8 marks across both papers.',corbett:'https://corbettmaths.com/contents/#q',genie:'https://www.mathsgenie.co.uk/igcse/maths/edexcel/worksheet',epp:'https://www.exampaperspractice.co.uk/igcse-edexcel-9-1-mathematics-a-4ma1-topic-questions-higher-level/',sme:'https://www.savemyexams.com/igcse/maths/edexcel/a/17/topic-questions/2-algebra/2-5-quadratic-equations/',pmt:'https://www.physicsandmathstutor.com/maths-revision/igcse-edexcel/'},
+    {name:'Sequences — nth term',freq:'very-high',pct:'~4–6%',note:'Linear and quadratic nth term. Geometric sequences (Higher). Deciding whether a term is in a sequence.',corbett:'https://corbettmaths.com/contents/#s',genie:'https://www.mathsgenie.co.uk/igcse/maths/edexcel/worksheet',epp:'https://www.exampaperspractice.co.uk/igcse-edexcel-9-1-mathematics-a-4ma1-topic-questions-higher-level/',sme:'https://www.savemyexams.com/igcse/maths/edexcel/a/17/topic-questions/2-algebra/2-4-sequences/',pmt:'https://www.physicsandmathstutor.com/maths-revision/igcse-edexcel/'},
+    {name:'Straight line graphs',freq:'very-high',pct:'~4–5%',note:'Gradient, y-intercept, equation of line through two points, parallel and perpendicular lines.',corbett:'https://corbettmaths.com/contents/#s',genie:'https://www.mathsgenie.co.uk/igcse/maths/edexcel/worksheet',epp:'https://www.exampaperspractice.co.uk/igcse-edexcel-9-1-mathematics-a-4ma1-topic-questions-higher-level/',sme:'https://www.savemyexams.com/igcse/maths/edexcel/a/17/topic-questions/2-algebra/2-7-straight-line-graphs/',pmt:'https://www.physicsandmathstutor.com/maths-revision/igcse-edexcel/'},
+    {name:'Simultaneous equations',freq:'high',pct:'~3–5%',note:'Linear × linear and linear × quadratic. Sometimes set up from a word problem.',corbett:'https://corbettmaths.com/contents/#s',genie:'https://www.mathsgenie.co.uk/igcse/maths/edexcel/worksheet',epp:'https://www.exampaperspractice.co.uk/igcse-edexcel-9-1-mathematics-a-4ma1-topic-questions-higher-level/',sme:'https://www.savemyexams.com/igcse/maths/edexcel/a/17/topic-questions/2-algebra/2-6-simultaneous-equations/',pmt:'https://www.physicsandmathstutor.com/maths-revision/igcse-edexcel/'},
+    {name:'Rearranging formulae',freq:'high',pct:'~3–4%',note:'Changing the subject, including where the variable appears twice or under a square root.',corbett:'https://corbettmaths.com/contents/#r',genie:'https://www.mathsgenie.co.uk/igcse/maths/edexcel/worksheet',epp:'https://www.exampaperspractice.co.uk/igcse-edexcel-9-1-mathematics-a-4ma1-topic-questions-higher-level/',sme:'https://www.savemyexams.com/igcse/maths/edexcel/a/17/topic-questions/2-algebra/2-3-rearranging-formulae/',pmt:'https://www.physicsandmathstutor.com/maths-revision/igcse-edexcel/'},
+    {name:'Expanding & factorising',freq:'high',pct:'~3–4%',note:'Single bracket, double bracket, difference of two squares, grouping.',corbett:'https://corbettmaths.com/contents/#e',genie:'https://www.mathsgenie.co.uk/igcse/maths/edexcel/worksheet',epp:'https://www.exampaperspractice.co.uk/igcse-edexcel-9-1-mathematics-a-4ma1-topic-questions-higher-level/',sme:'https://www.savemyexams.com/igcse/maths/edexcel/a/17/topic-questions/2-algebra/2-1-expanding-factorising/',pmt:'https://www.physicsandmathstutor.com/maths-revision/igcse-edexcel/'},
+    {name:'Functions',freq:'medium',pct:'~2–3%',note:'f(x) notation, composite functions f(g(x)), inverse functions.',corbett:'https://corbettmaths.com/contents/#f',genie:'https://www.mathsgenie.co.uk/igcse/maths/edexcel/worksheet',epp:'https://www.exampaperspractice.co.uk/igcse-edexcel-9-1-mathematics-a-4ma1-topic-questions-higher-level/',sme:'https://www.savemyexams.com/igcse/maths/edexcel/a/17/topic-questions/2-algebra/2-9-functions/',pmt:'https://www.physicsandmathstutor.com/maths-revision/igcse-edexcel/'},
+    {name:'Inequalities',freq:'medium',pct:'~2%',note:'Solving linear inequalities, representing on number line or graph, integer solutions.',corbett:'https://corbettmaths.com/contents/#i',genie:'https://www.mathsgenie.co.uk/igcse/maths/edexcel/worksheet',epp:'https://www.exampaperspractice.co.uk/igcse-edexcel-9-1-mathematics-a-4ma1-topic-questions-higher-level/',sme:'https://www.savemyexams.com/igcse/maths/edexcel/a/17/topic-questions/2-algebra/2-8-inequalities/',pmt:'https://www.physicsandmathstutor.com/maths-revision/igcse-edexcel/'},
+    {name:'Algebraic fractions',freq:'medium',pct:'~1–2%',note:'Simplifying, adding, multiplying. Often part of an equation to solve.',corbett:'https://corbettmaths.com/contents/#a',genie:'https://www.mathsgenie.co.uk/igcse/maths/edexcel/worksheet',epp:'https://www.exampaperspractice.co.uk/igcse-edexcel-9-1-mathematics-a-4ma1-topic-questions-higher-level/',sme:'https://www.savemyexams.com/igcse/maths/edexcel/a/17/topic-questions/2-algebra/',pmt:'https://www.physicsandmathstutor.com/maths-revision/igcse-edexcel/'},
+    {name:'Quadratic & other graphs',freq:'medium',pct:'~1–2%',note:'Sketching quadratic, cubic, reciprocal graphs. Reading values and intersections.',corbett:'https://corbettmaths.com/contents/#g',genie:'https://www.mathsgenie.co.uk/igcse/maths/edexcel/worksheet',epp:'https://www.exampaperspractice.co.uk/igcse-edexcel-9-1-mathematics-a-4ma1-topic-questions-higher-level/',sme:'https://www.savemyexams.com/igcse/maths/edexcel/a/17/topic-questions/2-algebra/2-10-graphs-of-functions/',pmt:'https://www.physicsandmathstutor.com/maths-revision/igcse-edexcel/'},
+  ]},
+  {strand:'Geometry & Measures',strandPct:30,strandColor:'#8B5CF6',strandFill:'#F5F3FF',
+   strandDesc:'Roughly 30% of marks. Trigonometry, area/volume and vectors are the heaviest hitters. Circle theorems and sine/cosine rules are reliable Higher-tier questions.',
+   topics:[
+    {name:'Trigonometry — SOH CAH TOA',freq:'very-high',pct:'~5–6%',note:'Right-angled triangles in 2D and 3D. Almost guaranteed in every paper.',corbett:'https://corbettmaths.com/contents/#t',genie:'https://www.mathsgenie.co.uk/igcse/maths/edexcel/worksheet',epp:'https://www.exampaperspractice.co.uk/igcse-edexcel-9-1-mathematics-a-4ma1-topic-questions-higher-level/',sme:'https://www.savemyexams.com/igcse/maths/edexcel/a/17/topic-questions/3-geometry/3-8-trigonometry/',pmt:'https://www.physicsandmathstutor.com/maths-revision/igcse-edexcel/'},
+    {name:'Area, perimeter & volume',freq:'very-high',pct:'~5–6%',note:'Compound shapes, circles, sectors, cylinders, cones, spheres. Often multi-step.',corbett:'https://corbettmaths.com/contents/#a',genie:'https://www.mathsgenie.co.uk/igcse/maths/edexcel/worksheet',epp:'https://www.exampaperspractice.co.uk/igcse-edexcel-9-1-mathematics-a-4ma1-topic-questions-higher-level/',sme:'https://www.savemyexams.com/igcse/maths/edexcel/a/17/topic-questions/3-geometry/3-4-area-and-perimeter/',pmt:'https://www.physicsandmathstutor.com/maths-revision/igcse-edexcel/'},
+    {name:'Vectors',freq:'high',pct:'~4–5%',note:'Column vectors, vector paths, proving points are collinear. Often 5–8 marks at end of Paper 2.',corbett:'https://corbettmaths.com/contents/#v',genie:'https://www.mathsgenie.co.uk/igcse/maths/edexcel/worksheet',epp:'https://www.exampaperspractice.co.uk/igcse-edexcel-9-1-mathematics-a-4ma1-topic-questions-higher-level/',sme:'https://www.savemyexams.com/igcse/maths/edexcel/a/17/topic-questions/3-geometry/3-11-vectors/',pmt:'https://www.physicsandmathstutor.com/maths-revision/igcse-edexcel/'},
+    {name:'Circle theorems',freq:'high',pct:'~4–5%',note:'All 8 theorems. Usually 5–7 marks. Must state the theorem name to earn reasoning marks.',corbett:'https://corbettmaths.com/contents/#c',genie:'https://www.mathsgenie.co.uk/igcse/maths/edexcel/worksheet',epp:'https://www.exampaperspractice.co.uk/igcse-edexcel-9-1-mathematics-a-4ma1-topic-questions-higher-level/',sme:'https://www.savemyexams.com/igcse/maths/edexcel/a/17/topic-questions/3-geometry/3-7-circle-theorems/',pmt:'https://www.physicsandmathstutor.com/maths-revision/igcse-edexcel/'},
+    {name:'Sine rule & cosine rule',freq:'high',pct:'~3–4%',note:'Non-right-angled triangles. Area = ½ab sin C. Bearings problems often use these.',corbett:'https://corbettmaths.com/contents/#s',genie:'https://www.mathsgenie.co.uk/igcse/maths/edexcel/worksheet',epp:'https://www.exampaperspractice.co.uk/igcse-edexcel-9-1-mathematics-a-4ma1-topic-questions-higher-level/',sme:'https://www.savemyexams.com/igcse/maths/edexcel/a/17/topic-questions/3-geometry/3-9-sine-cosine-rules/',pmt:'https://www.physicsandmathstutor.com/maths-revision/igcse-edexcel/'},
+    {name:'Transformations',freq:'high',pct:'~3–4%',note:'Reflection, rotation, translation, enlargement (positive, negative, fractional scale factors).',corbett:'https://corbettmaths.com/contents/#t',genie:'https://www.mathsgenie.co.uk/igcse/maths/edexcel/worksheet',epp:'https://www.exampaperspractice.co.uk/igcse-edexcel-9-1-mathematics-a-4ma1-topic-questions-higher-level/',sme:'https://www.savemyexams.com/igcse/maths/edexcel/a/17/topic-questions/3-geometry/3-10-transformations/',pmt:'https://www.physicsandmathstutor.com/maths-revision/igcse-edexcel/'},
+    {name:'Angles & polygons',freq:'medium',pct:'~2–3%',note:'Interior/exterior angles, parallel line rules, bearing problems. Usually early in the paper.',corbett:'https://corbettmaths.com/contents/#a',genie:'https://www.mathsgenie.co.uk/igcse/maths/edexcel/worksheet',epp:'https://www.exampaperspractice.co.uk/igcse-edexcel-9-1-mathematics-a-4ma1-topic-questions-higher-level/',sme:'https://www.savemyexams.com/igcse/maths/edexcel/a/17/topic-questions/3-geometry/3-1-angles/',pmt:'https://www.physicsandmathstutor.com/maths-revision/igcse-edexcel/'},
+    {name:'Pythagoras theorem',freq:'medium',pct:'~2%',note:'Often embedded in trigonometry or 3D questions rather than standalone.',corbett:'https://corbettmaths.com/contents/#p',genie:'https://www.mathsgenie.co.uk/igcse/maths/edexcel/worksheet',epp:'https://www.exampaperspractice.co.uk/igcse-edexcel-9-1-mathematics-a-4ma1-topic-questions-higher-level/',sme:'https://www.savemyexams.com/igcse/maths/edexcel/a/17/topic-questions/3-geometry/3-6-pythagoras/',pmt:'https://www.physicsandmathstutor.com/maths-revision/igcse-edexcel/'},
+    {name:'Constructions & loci',freq:'low',pct:'~1%',note:'Perpendicular bisector, angle bisector, loci problems. Compass arcs are mark-bearing.',corbett:'https://corbettmaths.com/contents/#c',genie:'https://www.mathsgenie.co.uk/igcse/maths/edexcel/worksheet',epp:'https://www.exampaperspractice.co.uk/igcse-edexcel-9-1-mathematics-a-4ma1-topic-questions-higher-level/',sme:'https://www.savemyexams.com/igcse/maths/edexcel/a/17/topic-questions/3-geometry/',pmt:'https://www.physicsandmathstutor.com/maths-revision/igcse-edexcel/'},
+  ]},
+  {strand:'Statistics & Probability',strandPct:16,strandColor:'#10B981',strandFill:'#ECFDF5',
+   strandDesc:'Roughly 16% of marks. Tree diagrams and cumulative frequency are the most reliable topics.',
+   topics:[
+    {name:'Tree diagrams',freq:'high',pct:'~4–5%',note:'Independent and conditional probability, with and without replacement.',corbett:'https://corbettmaths.com/contents/#t',genie:'https://www.mathsgenie.co.uk/igcse/maths/edexcel/worksheet',epp:'https://www.exampaperspractice.co.uk/igcse-edexcel-9-1-mathematics-a-4ma1-topic-questions-higher-level/',sme:'https://www.savemyexams.com/igcse/maths/edexcel/a/17/topic-questions/4-statistics-probability/4-7-tree-diagrams/',pmt:'https://www.physicsandmathstutor.com/maths-revision/igcse-edexcel/'},
+    {name:'Cumulative frequency & box plots',freq:'high',pct:'~3–4%',note:'Drawing curves, reading median/IQR, comparing box plots. Accurate plotting is the mark-getter.',corbett:'https://corbettmaths.com/contents/#c',genie:'https://www.mathsgenie.co.uk/igcse/maths/edexcel/worksheet',epp:'https://www.exampaperspractice.co.uk/igcse-edexcel-9-1-mathematics-a-4ma1-topic-questions-higher-level/',sme:'https://www.savemyexams.com/igcse/maths/edexcel/a/17/topic-questions/4-statistics-probability/4-5-cumulative-frequency/',pmt:'https://www.physicsandmathstutor.com/maths-revision/igcse-edexcel/'},
+    {name:'Histograms',freq:'high',pct:'~3–4%',note:'Frequency density on y-axis. Reading and completing histograms.',corbett:'https://corbettmaths.com/contents/#h',genie:'https://www.mathsgenie.co.uk/igcse/maths/edexcel/worksheet',epp:'https://www.exampaperspractice.co.uk/igcse-edexcel-9-1-mathematics-a-4ma1-topic-questions-higher-level/',sme:'https://www.savemyexams.com/igcse/maths/edexcel/a/17/topic-questions/4-statistics-probability/4-4-histograms/',pmt:'https://www.physicsandmathstutor.com/maths-revision/igcse-edexcel/'},
+    {name:'Averages & range',freq:'medium',pct:'~2–3%',note:'Mean from frequency table (grouped and ungrouped), median, mode, range.',corbett:'https://corbettmaths.com/contents/#a',genie:'https://www.mathsgenie.co.uk/igcse/maths/edexcel/worksheet',epp:'https://www.exampaperspractice.co.uk/igcse-edexcel-9-1-mathematics-a-4ma1-topic-questions-higher-level/',sme:'https://www.savemyexams.com/igcse/maths/edexcel/a/17/topic-questions/4-statistics-probability/4-1-averages/',pmt:'https://www.physicsandmathstutor.com/maths-revision/igcse-edexcel/'},
+    {name:'Scatter graphs & correlation',freq:'medium',pct:'~2%',note:'Plotting, line of best fit, describing correlation, making predictions.',corbett:'https://corbettmaths.com/contents/#s',genie:'https://www.mathsgenie.co.uk/igcse/maths/edexcel/worksheet',epp:'https://www.exampaperspractice.co.uk/igcse-edexcel-9-1-mathematics-a-4ma1-topic-questions-higher-level/',sme:'https://www.savemyexams.com/igcse/maths/edexcel/a/17/topic-questions/4-statistics-probability/4-6-scatter-diagrams/',pmt:'https://www.physicsandmathstutor.com/maths-revision/igcse-edexcel/'},
+    {name:'Basic probability',freq:'medium',pct:'~1–2%',note:'Single event probability, listing outcomes, sample space diagrams.',corbett:'https://corbettmaths.com/contents/#p',genie:'https://www.mathsgenie.co.uk/igcse/maths/edexcel/worksheet',epp:'https://www.exampaperspractice.co.uk/igcse-edexcel-9-1-mathematics-a-4ma1-topic-questions-higher-level/',sme:'https://www.savemyexams.com/igcse/maths/edexcel/a/17/topic-questions/4-statistics-probability/4-7-probability/',pmt:'https://www.physicsandmathstutor.com/maths-revision/igcse-edexcel/'},
+  ]},
+];
+
+/* ════════════════════════════
+   4PM1 CHAPTER DATA (textbook order, Ali Datoo)
+════════════════════════════ */
+const _epp4pm='https://www.exampaperspractice.co.uk';
+const _sme4pm='https://www.savemyexams.com/igcse/further-maths/edexcel/';
+const _pmt4pm='https://www.physicsandmathstutor.com/maths-revision/igcse-edexcel/further-pure/';
+
+const CHAPTERS_4PM1=[
+  {n:1,name:'Surds and Logarithmic Functions',freq:'high',note:'Surds, rationalising denominators, laws of logs, solving exponential and log equations.',epp:_epp4pm,sme:_sme4pm,pmt:_pmt4pm},
+  {n:2,name:'The Quadratic Function',freq:'very-high',note:'Completing the square, discriminant, roots and coefficients, disguised quadratics.',epp:_epp4pm,sme:_sme4pm,pmt:_pmt4pm},
+  {n:3,name:'Inequalities and Identities',freq:'high',note:'Solving quadratic inequalities, polynomial identities, factor and remainder theorems.',epp:_epp4pm,sme:_sme4pm,pmt:_pmt4pm},
+  {n:4,name:'Sketching Polynomials',freq:'medium',note:'Sketching cubic and higher-degree curves, understanding roots and turning points.',epp:_epp4pm,sme:_sme4pm,pmt:_pmt4pm},
+  {n:5,name:'Sequences and Series',freq:'very-high',note:'Arithmetic and geometric sequences, sum to n terms, sum to infinity of geometric series.',epp:_epp4pm,sme:_sme4pm,pmt:_pmt4pm},
+  {n:6,name:'The Binomial Series',freq:'high',note:'Binomial expansion for positive integer powers using (a + b)ⁿ.',epp:_epp4pm,sme:_sme4pm,pmt:_pmt4pm},
+  {n:7,name:'Scalar and Vector Quantities',freq:'high',note:'Vector addition, subtraction, magnitude, unit vectors, scalar product, geometric applications.',epp:_epp4pm,sme:_sme4pm,pmt:_pmt4pm},
+  {n:8,name:'Rectangular Cartesian Coordinates',freq:'high',note:'Distance, midpoint, perpendicular bisector, equation of a circle, tangent and chord properties.',epp:_epp4pm,sme:_sme4pm,pmt:_pmt4pm},
+  {n:9,name:'Differentiation',freq:'very-high',note:'Product, quotient and chain rules; eˣ, sin x, cos x; tangents, normals, stationary points.',epp:_epp4pm,sme:_sme4pm,pmt:_pmt4pm},
+  {n:10,name:'Integration',freq:'very-high',note:'Definite and indefinite integrals, area under a curve, kinematics applications.',epp:_epp4pm,sme:_sme4pm,pmt:_pmt4pm},
+  {n:11,name:'Trigonometry',freq:'very-high',note:'Radians, arc length, sector area, identities, equations in given intervals, 3D problems.',epp:_epp4pm,sme:_sme4pm,pmt:_pmt4pm},
+];
+
+/* ════════════════════════════
+   IAL CHAPTER DATA (textbook order, no freq)
+════════════════════════════ */
+const _pmt_ial='https://www.physicsandmathstutor.com/maths-revision/a-level-edexcel-international/';
+const _es='https://www.examsolutions.net/international-exams/edexcel/';
+const _sme_ial='https://www.savemyexams.com/international-a-level/maths/edexcel/';
+
+function ch(n,name){return{n,name};}
+
+const IAL_CHAPTERS={
+  P1:[
+    ch(1,'Algebraic Expressions'),ch(2,'Quadratics'),ch(3,'Equations and Inequalities'),
+    ch(4,'Graphs and Transformations'),ch(5,'Straight Line Graphs'),ch(6,'Trigonometric Ratios'),
+    ch(7,'Radians'),ch(8,'Differentiation'),ch(9,'Integration'),
+  ],
+  P2:[
+    ch(1,'Algebraic Methods'),ch(2,'Coordinate Geometry in the (x, y) Plane'),
+    ch(3,'Exponentials and Logarithms'),ch(4,'The Binomial Expansion'),
+    ch(5,'Sequences and Series'),ch(6,'Trigonometric Identities and Equations'),
+    ch(7,'Differentiation'),ch(8,'Integration'),
+  ],
+  P3:[
+    ch(1,'Algebraic Methods'),ch(2,'Functions and Graphs'),ch(3,'Trigonometric Functions'),
+    ch(4,'Trigonometric Addition Formulae'),ch(5,'Exponentials and Logarithms'),
+    ch(6,'Differentiation'),ch(7,'Integration'),ch(8,'Numerical Methods'),
+  ],
+  P4:[
+    ch(1,'Proof'),ch(2,'Partial Fractions'),ch(3,'Coordinate Geometry in the (x, y) Plane'),
+    ch(4,'Binomial Expansion'),ch(5,'Differentiation'),ch(6,'Integration'),ch(7,'Vectors'),
+  ],
+  FP1:[
+    ch(1,'Complex Numbers'),ch(2,'Roots of Quadratic Equations'),
+    ch(3,'Numerical Solutions of Equations'),ch(4,'Coordinate Systems'),
+    ch(5,'Matrices'),ch(6,'Transformations Using Matrices'),ch(7,'Series'),ch(8,'Proof'),
+  ],
+  FP2:[
+    ch(1,'Inequalities'),ch(2,'Series'),ch(3,'Complex Numbers'),ch(4,'Further Argand Diagrams'),
+    ch(5,'First-order Differential Equations'),ch(6,'Second-order Differential Equations'),
+    ch(7,'Maclaurin and Taylor Series'),ch(8,'Polar Coordinates'),
+  ],
+  S1:[
+    ch(1,'Mathematical Modelling'),ch(2,'Measures of Location and Spread'),
+    ch(3,'Representations of Data'),ch(4,'Probability'),
+    ch(5,'Correlation and Regression'),ch(6,'Discrete Random Variables'),ch(7,'The Normal Distribution'),
+  ],
+  S2:[
+    ch(1,'Binomial Distributions'),ch(2,'Poisson Distributions'),ch(3,'Approximations'),
+    ch(4,'Continuous Random Variables'),ch(5,'Continuous Uniform Distribution'),
+    ch(6,'Sampling and Sampling Distributions'),ch(7,'Hypothesis Testing'),
+  ],
+  S3:[
+    ch(1,'Combinations of Random Variables'),ch(2,'Sampling'),
+    ch(3,'Estimation, Confidence Intervals and Tests'),
+    ch(4,'Goodness of Fit and Contingency Tables'),ch(5,'Regression and Correlation'),
+  ],
+  M1:[
+    ch(1,'Mathematical Models in Mechanics'),ch(2,'Vectors in Mechanics'),
+    ch(3,'Kinematics of a Particle Moving in a Straight Line'),
+    ch(4,'Dynamics of a Particle Moving in a Straight Line or Plane'),
+    ch(5,'Statics of a Particle'),ch(6,'Moments'),
+  ],
+  M2:[
+    ch(1,'Projectiles'),ch(2,'Variable Acceleration'),ch(3,'Centres of Mass'),
+    ch(4,'Work and Energy'),ch(5,'Impulses and Collisions'),ch(6,'Statics of Rigid Bodies'),
+  ],
+  D1:[
+    ch(1,'Algorithms'),ch(2,'Graphs and Networks'),ch(3,'Algorithms on Graphs'),
+    ch(4,'Route Inspection'),ch(5,'The Travelling Salesman Problem'),
+    ch(6,'Critical Path Analysis'),ch(7,'Linear Programming'),
+  ],
+};
+
+/* ════════════════════════════
+   RENDER HELPERS
+════════════════════════════ */
+const EXT_SVG=`<svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`;
+
+function freqClass(f){return{['very-high']:'freq-very-high',high:'freq-high',medium:'freq-medium',low:'freq-low'}[f]||'freq-low';}
+function freqLabel(f){return{['very-high']:'Very high',high:'High',medium:'Medium',low:'Low'}[f]||'';}
+
+function linkBtn(cls,label,url){
+  return `<a class="topic-link ${cls}" href="${url}" target="_blank" rel="noopener">${EXT_SVG}${label}</a>`;
+}
+
+/* 4MA1 — strand-based */
+function renderTopics(containerId,data){
+  const el=document.getElementById(containerId);
+  if(!el)return;
+  el.innerHTML=data.map(strand=>`
+    <div class="strand-section">
+      <div class="strand-title-row">
+        <div class="strand-name">${strand.strand}</div>
+        <span class="strand-pct" style="background:${strand.strandFill};color:${strand.strandColor}">${strand.strandPct}% of marks</span>
+      </div>
+      <div class="strand-bar-wrap">
+        <div class="strand-bar-bg"><div class="strand-bar-fill" style="width:${strand.strandPct*2.5}%;background:${strand.strandColor}"></div></div>
+        <span class="strand-bar-label">~${strand.strandPct}/100 marks per paper</span>
+      </div>
+      <div class="strand-desc">${strand.strandDesc}</div>
+      <div class="topic-grid">${strand.topics.map(t=>`
+        <div class="topic-card" data-name="${t.name.toLowerCase()}">
+          <div class="topic-card-top">
+            <div class="topic-name">${t.name}</div>
+            <span class="freq-badge ${freqClass(t.freq)}">${freqLabel(t.freq)} · ${t.pct}</span>
+          </div>
+          <div class="topic-note">${t.note}</div>
+          <div class="topic-links">
+            ${t.corbett?linkBtn('corbett','Corbett',t.corbett):''}
+            ${t.genie?linkBtn('genie','Maths Genie',t.genie):''}
+            ${t.epp?linkBtn('epp','Exam Papers Practice',t.epp):''}
+            ${t.sme?linkBtn('sme','Save My Exams',t.sme):''}
+            ${t.pmt?linkBtn('pmt','PMT',t.pmt):''}
+          </div>
+        </div>`).join('')}
+      </div>
+    </div>`).join('');
+}
+
+/* 4PM1 — chapter-based with freq */
+function renderChapters4PM1(containerId,chapters){
+  const el=document.getElementById(containerId);if(!el)return;
+  el.innerHTML=chapters.map(c=>`
+    <div class="ch-card" data-name="ch${c.n} ${c.name.toLowerCase()}">
+      <div class="ch-card-top">
+        <div>
+          <div class="ch-num">Chapter ${c.n}</div>
+          <div class="ch-name">${c.name}</div>
+        </div>
+        ${c.freq?`<span class="freq-badge ${freqClass(c.freq)}" style="margin-top:4px">${freqLabel(c.freq)}</span>`:''}
+      </div>
+      ${c.note?`<div class="topic-note" style="margin:0">${c.note}</div>`:''}
+      <div class="ch-links">
+        ${c.epp?linkBtn('epp','Exam Papers Practice',c.epp):''}
+        ${c.sme?linkBtn('sme','Save My Exams',c.sme):''}
+        ${c.pmt?linkBtn('pmt','PMT',c.pmt):''}
+      </div>
+    </div>`).join('');
+}
+
+/* IAL modules — chapter-based no freq */
+function renderIALChapters(containerId,chapters){
+  const el=document.getElementById(containerId);if(!el)return;
+  el.innerHTML=chapters.map(c=>`
+    <div class="ch-card" data-name="ch${c.n} ${c.name.toLowerCase()}">
+      <div class="ch-num">Chapter ${c.n}</div>
+      <div class="ch-name">${c.name}</div>
+      <div class="ch-links">
+        ${linkBtn('pmt','PMT',_pmt_ial)}
+        ${linkBtn('corbett','ExamSolutions',_es)}
+        ${linkBtn('sme','Save My Exams',_sme_ial)}
+      </div>
+    </div>`).join('');
+}
+
+/* Filter chapter grids */
+function filterChapters(prog,query){
+  const q=query.toLowerCase().trim();
+  const containerId=prog==='4pm1'?'chapters-4pm1':'chapters-mod';
+  const el=document.getElementById(containerId);if(!el)return;
+  el.querySelectorAll('.ch-card').forEach(card=>{
+    card.style.display=(q===''||(card.getAttribute('data-name')||'').includes(q))?'':'none';
+  });
+}
+
+/* Filter 4MA1 strand topics */
+function filterTopics(prog,query){
+  const q=query.toLowerCase().trim();
+  const el=document.getElementById('topics-'+prog);if(!el)return;
+  el.querySelectorAll('.topic-card').forEach(c=>{c.style.display=(q===''||(c.getAttribute('data-name')||'').includes(q))?'':'none';});
+  el.querySelectorAll('.strand-section').forEach(s=>{
+    s.style.display=[...s.querySelectorAll('.topic-card')].some(c=>c.style.display!=='none')?'':'none';
+  });
+}
+
+/* ════════════════════════════
+   PAPERS RENDER
+════════════════════════════ */
+function pillPair(pUrl,msUrl){
+  const dl=`<svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>`;
+  const ck=`<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>`;
+  return `<div class="pill-wrap"><a class="dl-pill paper" href="${pUrl}" target="_blank" rel="noopener">${dl}Paper</a><a class="dl-pill ms" href="${msUrl}" target="_blank" rel="noopener">${ck}MS</a></div>`;
+}
+
+function renderIGCSETable(prog,filter='all'){
+  const tbody=document.getElementById('tbody-'+prog);if(!tbody)return;
+  const rows=(PAPERS[prog]||[]).filter(r=>filter==='all'||r.s===filter);
+  tbody.innerHTML=rows.map(r=>`<tr><td class="year">${r.year}</td><td class="series">${r.series}</td><td>${pillPair(r.p1,r.ms1)}</td><td>${pillPair(r.p2,r.ms2)}</td></tr>`).join('');
+}
+
+function renderModuleTable(mod,filter='all'){
+  const tbody=document.getElementById('tbody-mod');if(!tbody)return;
+  const info=MODULE_INFO[mod];
+  const rows=(info?info.papers:[]).filter(r=>filter==='all'||r.s===filter);
+  const dl=`<svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>`;
+  const ck=`<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>`;
+  if(!rows.length){tbody.innerHTML=`<tr><td colspan="4" style="padding:24px 10px;color:var(--ink3);font-size:12px">Papers for ${mod} will be linked shortly. Visit <a href="https://www.paperlords.org" target="_blank" style="color:var(--ink2);text-decoration:underline;text-underline-offset:2px">Paperlords</a> in the meantime.</td></tr>`;return;}
+  tbody.innerHTML=rows.map(r=>`<tr><td class="year">${r.year}</td><td class="series">${r.series}</td><td><a class="dl-pill paper" href="${r.p}" target="_blank" rel="noopener">${dl}Paper</a></td><td><a class="dl-pill ms" href="${r.ms}" target="_blank" rel="noopener">${ck}Mark scheme</a></td></tr>`).join('');
+}
+
+/* ════════════════════════════
+   FILTER & TABS
+════════════════════════════ */
+function filterSeries(el,prog,val){
+  el.closest('.filter-row').querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+  if(prog==='mod'){const bc=document.getElementById('mod-bc-name').textContent;renderModuleTable(bc,val);}
+  else renderIGCSETable(prog,val);
+}
+
+function switchTab(el,prog,name){
+  el.closest('.tabs').querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll(`[id^="${prog}-"]`).forEach(p=>p.style.display='none');
+  const panel=document.getElementById(`${prog}-${name}`);
+  if(panel)panel.style.display='block';
+}
+
+/* ════════════════════════════
+   NAVIGATION
+════════════════════════════ */
+function nav(viewId){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('.sb-item').forEach(i=>i.classList.remove('active'));
+  const v=document.getElementById('view-'+viewId);if(v)v.classList.add('active');
+  const sb=document.querySelector(`[data-view="${viewId}"]`);if(sb)sb.classList.add('active');
+  if(viewId==='igcse-4ma1')renderIGCSETable('4ma1');
+  if(viewId==='igcse-4pm1')renderIGCSETable('4pm1');
+  document.querySelector('.main').scrollTop=0;
+}
+
+/* ════════════════════════════
+   MODULE OPEN
+════════════════════════════ */
+let currentParent='ial-maths';
+function openModule(mod,code,type,parent){
+  currentParent=parent;
+  const info=MODULE_INFO[mod];if(!info)return;
+  document.getElementById('mod-detail-title').textContent=info.title;
+  document.getElementById('mod-detail-code').textContent=info.code;
+  document.getElementById('mod-detail-code').className='pg-chip '+info.color;
+  document.getElementById('mod-bc-name').textContent=mod;
+  const pl=document.getElementById('mod-parent-link');
+  pl.textContent=parent==='ial-fm'?'IAL Further Maths':'IAL Maths';
+  pl.onclick=()=>nav(parent);
+  renderModuleTable(mod,'all');
+  // render chapter list
+  const chs=IAL_CHAPTERS[mod]||[];
+  renderIALChapters('chapters-mod',chs);
+  // reset to papers tab
+  document.querySelectorAll('#tabs-mod .tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('#tabs-mod .tab')[0].classList.add('active');
+  ['mod-papers','mod-topics','mod-formula','mod-spec'].forEach(id=>{
+    const el=document.getElementById(id);if(el)el.style.display=id==='mod-papers'?'block':'none';
+  });
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-module-detail').classList.add('active');
+  document.querySelectorAll('.sb-item').forEach(i=>i.classList.remove('active'));
+  document.querySelector('.main').scrollTop=0;
+}
+
+/* ════════════════════════════
+   INIT
+════════════════════════════ */
+renderIGCSETable('4ma1');
+renderIGCSETable('4pm1');
+renderTopics('topics-4ma1',TOPICS_4MA1);
+renderChapters4PM1('chapters-4pm1',CHAPTERS_4PM1);
+</script>
+</body>
+</html>
