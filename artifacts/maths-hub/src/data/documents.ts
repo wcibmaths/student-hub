@@ -54,12 +54,15 @@ export const PROGRAMME_DOCS: ProgrammeDocs[] = [
     formula: [
       {
         label: 'Edexcel IAL Mathematical Formulae and Statistical Tables',
-        url: PH,
+        url: 'https://qualifications.pearson.com/content/dam/pdf/International%20Advanced%20Level/Mathematics/2018/Specification-and-Sample-Assessment/IAL-Mathematics-Formula-Book.pdf',
         note: 'Single booklet shared across every IAL Maths and Further Maths unit (P1–P4, FP1–FP2, S1–S3, M1–M2, D1).',
       },
     ],
     specification: [
-      { label: 'Official Edexcel IAL Mathematics specification', url: PH },
+      {
+        label: 'Official Edexcel IAL Mathematics specification',
+        url: 'https://qualifications.pearson.com/content/dam/pdf/International%20Advanced%20Level/Mathematics/2018/Specification-and-Sample-Assessment/international-a-level-maths-spec.pdf',
+      },
     ],
   },
   {
@@ -70,12 +73,16 @@ export const PROGRAMME_DOCS: ProgrammeDocs[] = [
     formula: [
       {
         label: 'Uses the same IAL Mathematical Formulae and Statistical Tables booklet',
-        url: PH,
+        url: 'https://qualifications.pearson.com/content/dam/pdf/International%20Advanced%20Level/Mathematics/2018/Specification-and-Sample-Assessment/IAL-Mathematics-Formula-Book.pdf',
         note: 'The IAL formula booklet covers all Further Maths units too — see IAL Mathematics above.',
       },
     ],
     specification: [
-      { label: 'Official Edexcel IAL Further Mathematics specification', url: PH },
+      {
+        label: 'Official Edexcel IAL Further Mathematics specification',
+        url: 'https://qualifications.pearson.com/content/dam/pdf/International%20Advanced%20Level/Mathematics/2018/Specification-and-Sample-Assessment/international-a-level-maths-spec.pdf',
+        note: 'IAL Mathematics and IAL Further Mathematics share the same Edexcel specification document.',
+      },
     ],
   },
 ];
