@@ -1,0 +1,344 @@
+Paste this into Replit.
+
+```text
+Please update the Maths Hub app with the following changes.
+
+1. Rename PMT Solution Bank buttons
+
+Across all IAL Mathematics and IAL Further Mathematics modules, change the visible button label:
+
+From:
+PMT Solution Bank
+
+To:
+Textbook Solutions
+
+This is only a label change.
+
+Keep the same URL field and same PMT Solution Bank links in the data.
+
+Example:
+
+links: {
+  pmtSolutionBank: "..."
+}
+
+Should render as:
+
+Textbook Solutions
+
+Do not show the text “PMT Solution Bank” on student-facing pages.
+
+2. Remove “Source: PMT” from Past Papers
+
+In the Past Papers tab for all modules, remove the visible source display.
+
+Do not show:
+
+Source: PMT
+Source: Pearson
+Source: ExamSolutions
+
+Keep the source field in the data if needed for filtering or internal checks, but do not display it on the student page.
+
+Past paper rows should show only:
+
+Unit
+Year
+Series
+Question Paper button
+Mark Scheme button
+
+3. Split Applied modules into Mechanics and Decision
+
+In IAL Mathematics and IAL Further Mathematics, do not use the single heading “Applied”.
+
+Instead, split the module grid headings like this:
+
+Pure Mathematics
+P1
+P2
+P3
+P4
+
+Statistics
+S1
+S2
+S3, if shown in Further Mathematics
+
+Mechanics
+M1
+M2
+
+Decision
+D1
+
+For IAL Mathematics, show:
+Pure Mathematics: P1, P2, P3, P4
+Statistics: S1
+Mechanics: M1
+Decision: D1
+
+For IAL Further Mathematics, show:
+Further Pure Mathematics: FP1, FP2
+Statistics: S2, S3
+Mechanics: M2
+Decision: D1, only if we want D1 visible as part of the Further Maths route
+
+Do not group M1, M2, and D1 together under “Applied”.
+
+4. Add the school logo
+
+Please add a school logo to the app header and sidebar.
+
+Implementation steps:
+
+Create a folder in the project:
+
+public/assets/
+
+Add the school logo file there, for example:
+
+public/assets/wellington-logo.png
+
+Then add this image in the main layout header or sidebar:
+
+<img
+  src="/assets/wellington-logo.png"
+  alt="Wellington College Bangkok logo"
+  className="school-logo"
+/>
+
+Use CSS similar to:
+
+.school-logo {
+  width: 48px;
+  height: auto;
+  object-fit: contain;
+}
+
+For the sidebar, use:
+
+.sidebar-logo {
+  width: 120px;
+  height: auto;
+  margin-bottom: 16px;
+}
+
+If the app uses React and Tailwind, use:
+
+<img
+  src="/assets/wellington-logo.png"
+  alt="Wellington College Bangkok logo"
+  className="w-28 h-auto mb-4"
+/>
+
+Do not stretch or crop the logo.
+Keep the background clean.
+Use the logo at the top of the sidebar above the navigation.
+
+5. Move Home above the IGCSE heading
+
+In the left sidebar, Home should appear at the very top.
+
+The order should be:
+
+Home
+
+IGCSE
+IGCSE Mathematics A
+IGCSE Further Pure Mathematics
+
+IAL
+IAL Mathematics
+IAL Further Mathematics
+
+Exam documents
+Formula sheets
+Specifications
+All past papers
+
+Tools
+Search all papers
+Topic finder, if included
+
+6. Add “All past papers” under Exam documents
+
+Create a new sidebar item:
+
+All past papers
+
+Place it under Exam documents, below Formula sheets and Specifications.
+
+This should open a central page where students can search and filter all available past papers across courses.
+
+Suggested filters:
+
+Programme
+Unit or paper
+Year
+Series
+
+For IGCSE, filters should include:
+4MA1 Paper 1H
+4MA1 Paper 2H
+4PM1 Paper 1
+4PM1 Paper 2
+
+For IAL, filters should include:
+P1
+P2
+P3
+P4
+FP1
+FP2
+S1
+S2
+S3
+M1
+M2
+D1
+
+Each result should show:
+
+Programme
+Unit or paper
+Year
+Series
+Question Paper button
+Mark Scheme button
+
+Do not display the source.
+
+7. Fix “Search all papers” under Tools
+
+The current “Search all papers” tool is useful, but it is not clickable.
+
+Please make the whole card or button clickable.
+
+Expected behaviour:
+
+When students click Search all papers, it should open the All past papers page.
+
+If the app uses route navigation, route it to:
+
+/all-past-papers
+
+If the app uses internal state, set the active page to:
+
+allPastPapers
+
+Example:
+
+<button onClick={() => setActivePage("allPastPapers")}>
+  Search all papers
+</button>
+
+The card should also have clear hover styling so students know it is clickable.
+
+8. Move Tools below Exam documents
+
+In the sidebar, move the Tools section so it appears below Exam documents.
+
+Correct order:
+
+Home
+
+IGCSE
+IGCSE Mathematics A
+IGCSE Further Pure Mathematics
+
+IAL
+IAL Mathematics
+IAL Further Mathematics
+
+Exam documents
+Formula sheets
+Specifications
+All past papers
+
+Tools
+Search all papers
+Topic finder
+
+9. Add a Notice and Announcements section to the homepage
+
+Add a homepage section called:
+
+Notices and important announcements
+
+Place it near the top of the homepage, below the welcome heading and above the programme cards.
+
+This section should support short announcements for students.
+
+Suggested fields:
+
+title
+message
+date
+type
+linkText
+linkUrl
+
+Example data:
+
+const notices = [
+  {
+    title: "Exam season revision",
+    message: "Use the Topic Practice tabs first, then complete full past papers under timed conditions.",
+    date: "May 2026",
+    type: "exam",
+    linkText: "Go to all past papers",
+    linkUrl: "/all-past-papers"
+  },
+  {
+    title: "Upcoming mathematics exams",
+    message: "Check your class Teams page for confirmed exam dates and rooming.",
+    date: "May 2026",
+    type: "announcement",
+    linkText: "",
+    linkUrl: ""
+  }
+];
+
+Render notices as cards.
+
+If linkText and linkUrl exist, show a button.
+If not, show only the announcement text.
+
+10. Homepage layout suggestion
+
+The homepage order should be:
+
+Welcome section
+Notices and important announcements
+Quick actions
+Programme cards
+Exam documents
+Tools
+
+Quick actions should include:
+
+Topic practice
+All past papers
+Formula sheets
+
+11. Validation checks
+
+After making the changes, check:
+
+Home appears at the top of the sidebar.
+Tools appears below Exam documents.
+Formula sheets, Specifications, and All past papers appear under Exam documents.
+Search all papers is clickable.
+Search all papers opens the All past papers page.
+PMT Solution Bank no longer appears as student-facing text.
+The button now says Textbook Solutions.
+Past paper rows do not display Source.
+Mechanics and Decision are separate headings.
+The logo appears in the sidebar or header without distortion.
+The homepage has a Notices and important announcements section.
+The layout still works on laptop screens.
+```
+
+For the logo, you need to upload the image file into Replit first. Put it in `public/assets/`, then use the exact filename in the code.

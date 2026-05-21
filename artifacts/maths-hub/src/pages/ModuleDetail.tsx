@@ -123,13 +123,12 @@ export function ModuleDetail({ mod, parent, onNav }: Props) {
                     <th style={{ width: 100 }}>Series</th>
                     <th>Question paper</th>
                     <th>Mark scheme</th>
-                    <th style={{ width: 90 }}>Source</th>
                   </tr>
                 </thead>
                 <tbody>
                   {papers.length === 0 ? (
                     <tr>
-                      <td colSpan={5} style={{ padding: '24px 10px', color: 'var(--ink3)', fontSize: 12 }}>
+                      <td colSpan={4} style={{ padding: '24px 10px', color: 'var(--ink3)', fontSize: 12 }}>
                         No papers match the current filters.
                       </td>
                     </tr>
@@ -154,7 +153,6 @@ export function ModuleDetail({ mod, parent, onNav }: Props) {
                             </a>
                           ) : null}
                         </td>
-                        <td className="series" style={{ fontSize: 11 }}>{r.source}</td>
                       </tr>
                     ))
                   )}

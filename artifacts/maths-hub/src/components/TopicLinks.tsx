@@ -25,7 +25,7 @@ export function ChapterLinksRow({ links }: { links: ChapterLinks }) {
       <TopicLink key="rr" cls="rr" label="Rocket Revise" url={links.rocketRevise!} />
     ),
     isValid(links.pmtSolutionBank) && (
-      <TopicLink key="pmt" cls="pmt" label="PMT Solution Bank" url={links.pmtSolutionBank!} />
+      <TopicLink key="pmt" cls="pmt" label="Textbook Solutions" url={links.pmtSolutionBank!} />
     ),
     isValid(links.examSolutions) && (
       <TopicLink key="es" cls="corbett" label="ExamSolutions" url={links.examSolutions!} />

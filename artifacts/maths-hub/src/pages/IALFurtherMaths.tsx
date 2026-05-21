@@ -36,7 +36,7 @@ export function IALFurtherMaths({ onNav, onModule }: Props) {
         </div>
 
         <div className="mod-group">
-          <div className="mod-group-hd"><span className="mod-group-name">Pure — shared with IAL Maths</span><div className="mod-group-line" /></div>
+          <div className="mod-group-hd"><span className="mod-group-name">Pure Mathematics — shared with IAL Maths</span><div className="mod-group-line" /></div>
           <div className="mod-cards">
             {(['P1','P2','P3','P4'] as ModuleKey[]).map(mod => (
               <div key={mod} className="mod-card pure" onClick={() => onModule(mod, 'ial-fm')}>
@@ -44,21 +44,25 @@ export function IALFurtherMaths({ onNav, onModule }: Props) {
                 <div className="mod-card-code">{CODES[mod]}</div>
               </div>
             ))}
-            <div className="mod-card fp" onClick={() => onModule('FP1', 'ial-fm')}>
-              <div className="mod-card-name">FP1</div>
-              <div className="mod-card-code">WFM01</div>
-            </div>
-            <div className="mod-card fp" onClick={() => onModule('FP2', 'ial-fm')}>
-              <div className="mod-card-name">FP2</div>
-              <div className="mod-card-code">WFM02</div>
-            </div>
+          </div>
+        </div>
+
+        <div className="mod-group">
+          <div className="mod-group-hd"><span className="mod-group-name">Further Pure Mathematics</span><div className="mod-group-line" /></div>
+          <div className="mod-cards">
+            {(['FP1','FP2'] as ModuleKey[]).map(mod => (
+              <div key={mod} className="mod-card fp" onClick={() => onModule(mod, 'ial-fm')}>
+                <div className="mod-card-name">{mod}</div>
+                <div className="mod-card-code">{CODES[mod]}</div>
+              </div>
+            ))}
           </div>
         </div>
 
         <div className="mod-group">
           <div className="mod-group-hd"><span className="mod-group-name">Statistics</span><div className="mod-group-line" /></div>
           <div className="mod-cards">
-            {(['S1','S2','S3'] as ModuleKey[]).map(mod => (
+            {(['S2','S3'] as ModuleKey[]).map(mod => (
               <div key={mod} className="mod-card stats" onClick={() => onModule(mod, 'ial-fm')}>
                 <div className="mod-card-name">{mod}</div>
                 <div className="mod-card-code">{CODES[mod]}</div>
@@ -68,14 +72,22 @@ export function IALFurtherMaths({ onNav, onModule }: Props) {
         </div>
 
         <div className="mod-group">
-          <div className="mod-group-hd"><span className="mod-group-name">Applied</span><div className="mod-group-line" /></div>
+          <div className="mod-group-hd"><span className="mod-group-name">Mechanics</span><div className="mod-group-line" /></div>
           <div className="mod-cards">
-            {(['D1','M1','M2'] as ModuleKey[]).map(mod => (
-              <div key={mod} className="mod-card applied" onClick={() => onModule(mod, 'ial-fm')}>
-                <div className="mod-card-name">{mod}</div>
-                <div className="mod-card-code">{CODES[mod]}</div>
-              </div>
-            ))}
+            <div className="mod-card applied" onClick={() => onModule('M2', 'ial-fm')}>
+              <div className="mod-card-name">M2</div>
+              <div className="mod-card-code">WME02</div>
+            </div>
+          </div>
+        </div>
+
+        <div className="mod-group">
+          <div className="mod-group-hd"><span className="mod-group-name">Decision</span><div className="mod-group-line" /></div>
+          <div className="mod-cards">
+            <div className="mod-card applied" onClick={() => onModule('D1', 'ial-fm')}>
+              <div className="mod-card-name">D1</div>
+              <div className="mod-card-code">WDM11</div>
+            </div>
           </div>
         </div>
       </div>

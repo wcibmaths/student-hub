@@ -4,6 +4,32 @@ interface HomeProps {
   onNav: (view: View) => void;
 }
 
+interface Notice {
+  title: string;
+  message: string;
+  date: string;
+  type: 'exam' | 'announcement' | 'info';
+  linkText?: string;
+  linkView?: View;
+}
+
+const NOTICES: Notice[] = [
+  {
+    title: 'Exam season revision',
+    message: 'Use the Chapter Practice tabs first to lock in each topic, then complete full past papers under timed conditions.',
+    date: 'May 2026',
+    type: 'exam',
+    linkText: 'Go to all past papers',
+    linkView: 'all-past-papers',
+  },
+  {
+    title: 'Upcoming mathematics exams',
+    message: 'Check your class Teams page for confirmed exam dates and rooming.',
+    date: 'May 2026',
+    type: 'announcement',
+  },
+];
+
 export function Home({ onNav }: HomeProps) {
   return (
     <div className="view-enter" style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
@@ -17,6 +43,46 @@ export function Home({ onNav }: HomeProps) {
       </div>
 
       <div className="pg-body">
+        <div className="section-label">Notices and important announcements</div>
+        <div className="notices-grid">
+          {NOTICES.map((n, i) => (
+            <div key={i} className={`notice-card notice-${n.type}`}>
+              <div className="notice-head">
+                <span className={`notice-tag notice-tag-${n.type}`}>
+                  {n.type === 'exam' ? 'Exam' : n.type === 'announcement' ? 'Announcement' : 'Info'}
+                </span>
+                <span className="notice-date">{n.date}</span>
+              </div>
+              <div className="notice-title">{n.title}</div>
+              <div className="notice-message">{n.message}</div>
+              {n.linkText && n.linkView && (
+                <button className="notice-link" onClick={() => onNav(n.linkView!)}>
+                  {n.linkText} →
+                </button>
+              )}
+            </div>
+          ))}
+        </div>
+
+        <div className="section-label">Quick actions</div>
+        <div className="ql-grid">
+          <div className="ql-card" onClick={() => onNav('all-past-papers')} role="button" tabIndex={0}>
+            <svg style={{ color: 'var(--blue-txt)' }} viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <div className="ql-title">All past papers</div>
+            <div className="ql-sub">Every series, all programmes</div>
+          </div>
+          <div className="ql-card" onClick={() => onNav('formula-sheets')} role="button" tabIndex={0}>
+            <svg style={{ color: 'var(--amber-txt)' }} viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+            <div className="ql-title">Formula sheets</div>
+            <div className="ql-sub">Hosted PDFs, per unit</div>
+          </div>
+          <div className="ql-card" onClick={() => onNav('specifications')} role="button" tabIndex={0}>
+            <svg style={{ color: 'var(--green-txt)' }} viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+            <div className="ql-title">Specifications</div>
+            <div className="ql-sub">Official Edexcel syllabuses</div>
+          </div>
+        </div>
+
         <div className="section-label">Choose your programme</div>
         <div className="prog-grid">
           <div className="prog-card" onClick={() => onNav('igcse-4ma1')}>
@@ -52,12 +118,13 @@ export function Home({ onNav }: HomeProps) {
               <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
             </div>
             <div className="prog-card-title">IAL Mathematics</div>
-            <div className="prog-card-code">Edexcel · 6 modules</div>
-            <div className="prog-card-desc">P1–P4, S1, D1 or M1 · Years 12–13</div>
+            <div className="prog-card-code">Edexcel · 7 modules</div>
+            <div className="prog-card-desc">P1–P4, S1, M1, D1 · Years 12–13</div>
             <div className="prog-tags">
               <span className="prog-tag" style={{ background: 'var(--blue-bg)', color: 'var(--blue-txt)' }}>Pure</span>
               <span className="prog-tag" style={{ background: 'var(--green-bg)', color: 'var(--green-txt)' }}>Statistics</span>
-              <span className="prog-tag" style={{ background: 'var(--amber-bg)', color: 'var(--amber-txt)' }}>Applied</span>
+              <span className="prog-tag" style={{ background: 'var(--amber-bg)', color: 'var(--amber-txt)' }}>Mechanics</span>
+              <span className="prog-tag" style={{ background: 'var(--amber-bg)', color: 'var(--amber-txt)' }}>Decision</span>
             </div>
           </div>
 
@@ -72,27 +139,9 @@ export function Home({ onNav }: HomeProps) {
               <span className="prog-tag" style={{ background: 'var(--blue-bg)', color: 'var(--blue-txt)' }}>Pure</span>
               <span className="prog-tag" style={{ background: 'var(--purple-bg)', color: 'var(--purple-txt)' }}>FP</span>
               <span className="prog-tag" style={{ background: 'var(--green-bg)', color: 'var(--green-txt)' }}>Stats</span>
-              <span className="prog-tag" style={{ background: 'var(--amber-bg)', color: 'var(--amber-txt)' }}>Applied</span>
+              <span className="prog-tag" style={{ background: 'var(--amber-bg)', color: 'var(--amber-txt)' }}>Mechanics</span>
+              <span className="prog-tag" style={{ background: 'var(--amber-bg)', color: 'var(--amber-txt)' }}>Decision</span>
             </div>
-          </div>
-        </div>
-
-        <div className="section-label">Quick access</div>
-        <div className="ql-grid">
-          <div className="ql-card">
-            <svg style={{ color: 'var(--blue-txt)' }} viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            <div className="ql-title">All past papers</div>
-            <div className="ql-sub">Every series, all programmes</div>
-          </div>
-          <div className="ql-card">
-            <svg style={{ color: 'var(--amber-txt)' }} viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-            <div className="ql-title">Formula sheets</div>
-            <div className="ql-sub">Hosted PDFs, per unit</div>
-          </div>
-          <div className="ql-card">
-            <svg style={{ color: 'var(--green-txt)' }} viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
-            <div className="ql-title">Specifications</div>
-            <div className="ql-sub">Official Edexcel syllabuses</div>
           </div>
         </div>
 

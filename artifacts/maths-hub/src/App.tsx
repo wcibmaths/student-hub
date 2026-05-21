@@ -9,6 +9,7 @@ import { IALFurtherMaths } from './pages/IALFurtherMaths';
 import { ModuleDetail, type ModuleKey } from './pages/ModuleDetail';
 import { FormulaSheets } from './pages/FormulaSheets';
 import { Specifications } from './pages/Specifications';
+import { AllPastPapers } from './pages/AllPastPapers';
 
 export type View =
   | 'home'
@@ -18,7 +19,8 @@ export type View =
   | 'ial-fm'
   | 'module-detail'
   | 'formula-sheets'
-  | 'specifications';
+  | 'specifications'
+  | 'all-past-papers';
 
 interface ModuleState {
   mod: ModuleKey;
@@ -59,6 +61,7 @@ function App() {
         )}
         {view === 'formula-sheets' && <FormulaSheets onNav={nav} />}
         {view === 'specifications' && <Specifications onNav={nav} />}
+        {view === 'all-past-papers' && <AllPastPapers onNav={nav} />}
       </main>
     </div>
   );

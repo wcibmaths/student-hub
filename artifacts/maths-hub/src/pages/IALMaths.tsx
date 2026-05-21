@@ -24,7 +24,7 @@ export function IALMaths({ onNav, onModule }: Props) {
         </div>
         <div className="pg-title-row">
           <div className="pg-title">IAL Mathematics</div>
-          <span className="pg-chip green">6 modules</span>
+          <span className="pg-chip green">7 modules</span>
           <span className="pg-chip">Edexcel</span>
         </div>
       </div>
@@ -36,7 +36,7 @@ export function IALMaths({ onNav, onModule }: Props) {
         </div>
 
         <div className="mod-group">
-          <div className="mod-group-hd"><span className="mod-group-name">Pure</span><div className="mod-group-line" /></div>
+          <div className="mod-group-hd"><span className="mod-group-name">Pure Mathematics</span><div className="mod-group-line" /></div>
           <div className="mod-cards">
             {(['P1','P2','P3','P4'] as ModuleKey[]).map(mod => (
               <div key={mod} className="mod-card pure" onClick={() => onModule(mod, 'ial-maths')}>
@@ -58,15 +58,21 @@ export function IALMaths({ onNav, onModule }: Props) {
         </div>
 
         <div className="mod-group">
-          <div className="mod-group-hd"><span className="mod-group-name">Applied — your choice</span><div className="mod-group-line" /></div>
+          <div className="mod-group-hd"><span className="mod-group-name">Mechanics</span><div className="mod-group-line" /></div>
+          <div className="mod-cards">
+            <div className="mod-card applied" onClick={() => onModule('M1', 'ial-maths')}>
+              <div className="mod-card-name">M1</div>
+              <div className="mod-card-code">WME01</div>
+            </div>
+          </div>
+        </div>
+
+        <div className="mod-group">
+          <div className="mod-group-hd"><span className="mod-group-name">Decision</span><div className="mod-group-line" /></div>
           <div className="mod-cards">
             <div className="mod-card applied" onClick={() => onModule('D1', 'ial-maths')}>
               <div className="mod-card-name">D1</div>
               <div className="mod-card-code">WDM11</div>
-            </div>
-            <div className="mod-card applied" onClick={() => onModule('M1', 'ial-maths')}>
-              <div className="mod-card-name">M1</div>
-              <div className="mod-card-code">WME01</div>
             </div>
           </div>
         </div>
