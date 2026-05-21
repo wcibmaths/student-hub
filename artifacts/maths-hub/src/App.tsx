@@ -7,8 +7,7 @@ import { IGCSE4PM1 } from './pages/IGCSE4PM1';
 import { IALMaths } from './pages/IALMaths';
 import { IALFurtherMaths } from './pages/IALFurtherMaths';
 import { ModuleDetail, type ModuleKey } from './pages/ModuleDetail';
-import { FormulaSheets } from './pages/FormulaSheets';
-import { Specifications } from './pages/Specifications';
+import { ExamDocuments } from './pages/ExamDocuments';
 import { AllPastPapers } from './pages/AllPastPapers';
 
 export type View =
@@ -18,8 +17,7 @@ export type View =
   | 'ial-maths'
   | 'ial-fm'
   | 'module-detail'
-  | 'formula-sheets'
-  | 'specifications'
+  | 'exam-documents'
   | 'all-past-papers';
 
 interface ModuleState {
@@ -59,8 +57,7 @@ function App() {
         {view === 'module-detail' && moduleState && (
           <ModuleDetail mod={moduleState.mod} parent={moduleState.parent} onNav={nav} />
         )}
-        {view === 'formula-sheets' && <FormulaSheets onNav={nav} />}
-        {view === 'specifications' && <Specifications onNav={nav} />}
+        {view === 'exam-documents' && <ExamDocuments onNav={nav} />}
         {view === 'all-past-papers' && <AllPastPapers onNav={nav} />}
       </main>
     </div>

@@ -73,6 +73,30 @@ button { font-family: var(--font); cursor: pointer; }
 .notice-message { font-size: 13px; color: var(--ink2); line-height: 1.5; }
 .notice-link { align-self: flex-start; margin-top: 4px; background: none; border: none; padding: 0; color: var(--blue-txt); font-size: 12px; font-weight: 500; cursor: pointer; }
 .notice-link:hover { text-decoration: underline; }
+
+.doc-tabs { display: inline-flex; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 3px; margin-bottom: 16px; gap: 2px; }
+.doc-tab { background: none; border: none; padding: 6px 14px; font-size: 12.5px; font-family: var(--font); color: var(--ink2); border-radius: 6px; cursor: pointer; transition: background .12s, color .12s; }
+.doc-tab:hover { color: var(--ink); }
+.doc-tab.on { background: var(--surface); color: var(--ink); font-weight: 500; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+
+.doc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 14px; }
+.doc-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; display: flex; flex-direction: column; gap: 14px; }
+.doc-card-head { display: flex; align-items: flex-start; gap: 12px; }
+.doc-card-dot { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.doc-card-dot svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.doc-card-title { font-size: 14.5px; font-weight: 600; color: var(--ink); letter-spacing: -0.01em; }
+.doc-card-sub { font-size: 11.5px; color: var(--ink3); margin-top: 2px; }
+.doc-section { border-top: 1px solid var(--border); padding-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+.doc-section-label { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink3); }
+.doc-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.doc-row-text { min-width: 0; flex: 1; }
+.doc-row-label { font-size: 13px; color: var(--ink); line-height: 1.4; }
+.doc-row-note { font-size: 11.5px; color: var(--ink3); margin-top: 3px; line-height: 1.45; }
+.doc-row-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; padding: 6px 11px; border-radius: 6px; border: 1px solid var(--border2); color: var(--ink); background: var(--surface); cursor: pointer; text-decoration: none; white-space: nowrap; flex-shrink: 0; transition: background .12s; font-family: var(--font); }
+.doc-row-btn:hover { background: var(--surface2); }
+.doc-row-btn.disabled { opacity: 0.5; cursor: default; }
+.doc-row-btn.disabled:hover { background: var(--surface); }
+.doc-row-btn svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .sb-label { font-size: 9px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink3); padding: 10px 18px 4px; }
 .sb-item { display: flex; align-items: center; gap: 9px; padding: 7px 18px; font-size: 12.5px; color: var(--ink2); cursor: pointer; border-left: 2px solid transparent; transition: background .12s, color .12s; }
 .sb-item:hover { background: var(--surface2); color: var(--ink); }
