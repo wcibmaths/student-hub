@@ -1,4 +1,5 @@
 import type { View } from '../App';
+import wellingtonLogo from '../assets/wellington-logo.png';
 
 interface SidebarProps {
   current: View;
@@ -9,7 +10,7 @@ export function Sidebar({ current, onNav }: SidebarProps) {
   return (
     <nav className="sb">
       <div className="sb-logo">
-        <img src={`${import.meta.env.BASE_URL}wellington-logo.png`} alt="Wellington College Bangkok logo" className="sidebar-logo" />
+        <img src={wellingtonLogo} alt="Wellington College Bangkok logo" className="sidebar-logo" />
         <div className="sb-logo-text">
           <div className="sb-logo-name">Maths Hub</div>
           <div className="sb-logo-sub">Wellington College Bangkok</div>
