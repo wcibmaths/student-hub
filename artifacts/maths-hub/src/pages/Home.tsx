@@ -16,7 +16,7 @@ interface HomeProps {
 export function Home({ onNav }: HomeProps) {
   const upcoming = getUpcomingThailandExams();
   const verified = hasVerifiedThailandExams();
-  const visible = upcoming.slice(0, 6);
+  const visible = upcoming.slice(0, 8);
 
   return (
     <div className="view-enter" style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
