@@ -13,9 +13,9 @@
   --ink2: #4F5762;
   --ink3: #6C7480;
 
-  /* sidebar — warm deep lavender (not navy) */
-  --sb-bg: #7A6584;
-  --sb-bg-2: #6B5775;
+  /* sidebar — deep slate-mint (not navy) */
+  --sb-bg: #3F6B5A;
+  --sb-bg-2: #335A4B;
   --sb-active-bg: rgba(255,255,255,0.13);
   --sb-active-border: #DBA39D; /* blush pop */
   --sb-text: rgba(255,255,255,0.82);
