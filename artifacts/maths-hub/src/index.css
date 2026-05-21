@@ -13,9 +13,9 @@
   --ink2: #4F5762;
   --ink3: #6C7480;
 
-  /* sidebar — deep slate-mint (not navy) */
-  --sb-bg: #3F6B5A;
-  --sb-bg-2: #335A4B;
+  /* sidebar — deep slate-blue (warmer than navy) */
+  --sb-bg: #4D6A85;
+  --sb-bg-2: #3F5870;
   --sb-active-bg: rgba(255,255,255,0.13);
   --sb-active-border: #DBA39D; /* blush pop */
   --sb-text: rgba(255,255,255,0.82);
@@ -83,6 +83,38 @@ button { font-family: var(--font); cursor: pointer; }
 .sb-logo-text { min-width: 0; }
 .sb-logo-name { font-size: 13px; font-weight: 600; letter-spacing: -0.01em; color: var(--sb-text-hover); }
 .sb-logo-sub { font-size: 10px; color: var(--sb-label); margin-top: 2px; line-height: 1.3; }
+
+/* KEY DATES CARD */
+.kd-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px 22px; margin-bottom: 24px; display: flex; flex-direction: column; gap: 16px; }
+.kd-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.kd-head-left { display: flex; align-items: flex-start; gap: 12px; }
+.kd-cal { width: 22px; height: 22px; stroke: var(--accent-d); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; margin-top: 2px; }
+.kd-title { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
+.kd-region { font-size: 12px; color: var(--ink3); margin-top: 2px; }
+.kd-last-checked { font-size: 11.5px; color: var(--ink3); font-family: var(--mono); }
+.kd-warn { display: flex; align-items: flex-start; gap: 10px; background: var(--accent-bg); border: 1px solid var(--accent); border-radius: var(--radius); padding: 12px 14px; font-size: 12.5px; color: var(--accent-d); line-height: 1.5; }
+.kd-warn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; margin-top: 1px; }
+.kd-warn strong { font-weight: 600; }
+.kd-warn-sub { margin-top: 4px; color: var(--ink2); font-size: 11.5px; }
+.kd-warn code { font-family: var(--mono); font-size: 10.5px; background: var(--surface2); padding: 1px 4px; border-radius: 3px; color: var(--ink); }
+.kd-empty { padding: 24px; text-align: center; color: var(--ink3); font-size: 13px; line-height: 1.6; background: var(--surface2); border-radius: var(--radius); }
+.kd-empty code { font-family: var(--mono); font-size: 11px; background: var(--surface); padding: 1px 5px; border-radius: 3px; color: var(--ink2); }
+.kd-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px 18px; }
+.kd-item { display: flex; align-items: center; gap: 14px; }
+.kd-date-block { background: var(--accent-bg); border-radius: 10px; padding: 8px 0; width: 56px; text-align: center; flex-shrink: 0; }
+.kd-day { font-size: 22px; font-weight: 600; color: var(--accent-d); line-height: 1; letter-spacing: -0.02em; }
+.kd-month { font-size: 10px; font-weight: 600; color: var(--accent-d); font-family: var(--mono); letter-spacing: 0.08em; margin-top: 4px; }
+.kd-item-text { min-width: 0; flex: 1; }
+.kd-item-title { font-size: 13.5px; font-weight: 600; color: var(--ink); letter-spacing: -0.01em; }
+.kd-item-sub { font-size: 11.5px; color: var(--ink2); margin-top: 2px; }
+.kd-item-meta { font-size: 10.5px; color: var(--ink3); margin-top: 4px; font-family: var(--mono); display: flex; gap: 4px; align-items: center; flex-wrap: wrap; }
+.kd-item-code { color: var(--ink2); font-weight: 500; }
+.kd-item-flag { background: var(--accent-bg); color: var(--accent-d); padding: 1px 6px; border-radius: 3px; font-size: 9.5px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; margin-left: 4px; }
+.kd-item-unverified .kd-date-block { background: var(--surface2); }
+.kd-item-unverified .kd-day, .kd-item-unverified .kd-month { color: var(--ink3); }
+.kd-foot { display: flex; align-items: center; justify-content: space-between; padding-top: 12px; border-top: 1px solid var(--border); font-size: 11px; color: var(--ink3); gap: 10px; flex-wrap: wrap; }
+.kd-foot-link { color: var(--accent-d); font-weight: 500; }
+.kd-foot-link:hover { text-decoration: underline; }
 
 .notices-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin-bottom: 24px; }
 .notice-card { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--ink); border-radius: var(--radius); padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }

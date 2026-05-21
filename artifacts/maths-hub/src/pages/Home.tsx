@@ -1,36 +1,23 @@
 import type { View } from '../App';
+import {
+  REGION,
+  LAST_CHECKED,
+  SOURCES,
+  getUpcomingThailandExams,
+  hasVerifiedThailandExams,
+  formatLastChecked,
+  formatExamDay,
+} from '../data/examTimetable';
 
 interface HomeProps {
   onNav: (view: View) => void;
 }
 
-interface Notice {
-  title: string;
-  message: string;
-  date: string;
-  type: 'exam' | 'announcement' | 'info';
-  linkText?: string;
-  linkView?: View;
-}
-
-const NOTICES: Notice[] = [
-  {
-    title: 'Exam season revision',
-    message: 'Use the Chapter Practice tabs first to lock in each topic, then complete full past papers under timed conditions.',
-    date: 'May 2026',
-    type: 'exam',
-    linkText: 'Go to all past papers',
-    linkView: 'all-past-papers',
-  },
-  {
-    title: 'Upcoming mathematics exams',
-    message: 'Check your class Teams page for confirmed exam dates and rooming.',
-    date: 'May 2026',
-    type: 'announcement',
-  },
-];
-
 export function Home({ onNav }: HomeProps) {
+  const upcoming = getUpcomingThailandExams();
+  const verified = hasVerifiedThailandExams();
+  const visible = upcoming.slice(0, 6);
+
   return (
     <div className="view-enter" style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
       <div className="home-hero">
@@ -43,25 +30,69 @@ export function Home({ onNav }: HomeProps) {
       </div>
 
       <div className="pg-body">
-        <div className="section-label">Notices and important announcements</div>
-        <div className="notices-grid">
-          {NOTICES.map((n, i) => (
-            <div key={i} className={`notice-card notice-${n.type}`}>
-              <div className="notice-head">
-                <span className={`notice-tag notice-tag-${n.type}`}>
-                  {n.type === 'exam' ? 'Exam' : n.type === 'announcement' ? 'Announcement' : 'Info'}
-                </span>
-                <span className="notice-date">{n.date}</span>
+        <div className="kd-card">
+          <div className="kd-head">
+            <div className="kd-head-left">
+              <svg className="kd-cal" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              <div>
+                <div className="kd-title">Upcoming mathematics exams</div>
+                <div className="kd-region">{REGION} region · Pearson International timetable</div>
               </div>
-              <div className="notice-title">{n.title}</div>
-              <div className="notice-message">{n.message}</div>
-              {n.linkText && n.linkView && (
-                <button className="notice-link" onClick={() => onNav(n.linkView!)}>
-                  {n.linkText} →
-                </button>
-              )}
             </div>
-          ))}
+            <div className="kd-last-checked">Last checked: {formatLastChecked()}</div>
+          </div>
+
+          {!verified && (
+            <div className="kd-warn">
+              <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              <div>
+                <strong>Exam timetable source needs verification for {REGION} region.</strong>
+                <div className="kd-warn-sub">
+                  Dates below are placeholders. An admin must confirm each entry against the official
+                  Pearson International timetable for Asia-Pacific that lists {REGION},
+                  then mark <code>verified: true</code> in <code>src/data/examTimetable.ts</code>.
+                </div>
+              </div>
+            </div>
+          )}
+
+          {visible.length === 0 ? (
+            <div className="kd-empty">
+              No exam dates have been added yet. Once an admin populates the Thailand timetable
+              (see <code>src/data/examTimetable.ts</code>), upcoming exams for IGCSE 4MA1, 4PM1
+              and IAL P1–P4, S1–S3, M1–M2, D1 will appear here.
+            </div>
+          ) : (
+            <div className="kd-grid">
+              {visible.map((e, i) => {
+                const { day, month } = formatExamDay(e.date);
+                return (
+                  <div key={i} className={`kd-item${!e.verified ? ' kd-item-unverified' : ''}`}>
+                    <div className="kd-date-block">
+                      <div className="kd-day">{day}</div>
+                      <div className="kd-month">{month}</div>
+                    </div>
+                    <div className="kd-item-text">
+                      <div className="kd-item-title">{e.title}</div>
+                      {e.subtitle && <div className="kd-item-sub">{e.subtitle}</div>}
+                      <div className="kd-item-meta">
+                        <span className="kd-item-code">{e.code}</span>
+                        <span className="kd-item-series">· {e.series}</span>
+                        {!e.verified && <span className="kd-item-flag">Unverified</span>}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          <div className="kd-foot">
+            <span>Source: {SOURCES.igcse.label} · {SOURCES.ial.label}</span>
+            <a href={SOURCES.igcse.url} target="_blank" rel="noopener noreferrer" className="kd-foot-link">
+              View Pearson timetables ↗
+            </a>
+          </div>
         </div>
 
         <div className="section-label">Quick actions</div>
