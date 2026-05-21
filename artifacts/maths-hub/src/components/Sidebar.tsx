@@ -47,7 +47,7 @@ export function Sidebar({ current, onNav }: SidebarProps) {
       <div className="sb-label">Exam documents</div>
       <div className={`sb-item${current === 'exam-documents' ? ' active' : ''}`} onClick={() => onNav('exam-documents')}>
         <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
-        Formulas &amp; specifications
+        Formulas &amp; specs
       </div>
       <div className={`sb-item${current === 'all-past-papers' ? ' active' : ''}`} onClick={() => onNav('all-past-papers')}>
         <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
