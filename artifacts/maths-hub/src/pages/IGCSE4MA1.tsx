@@ -5,8 +5,9 @@ import { TOPICS_4MA1 } from '../data/topics';
 import { PillPair, TopicLink } from '../components/PillPair';
 import { TopicLinksRow } from '../components/TopicLinks';
 import { FreqBadge } from '../components/FreqBadge';
+import { CourseGuide } from '../components/CourseGuide';
 
-type Tab = 'topics' | 'papers' | 'notes';
+type Tab = 'topics' | 'papers' | 'notes' | 'guide';
 type SeriesFilter = 'all' | 'jan' | 'jun' | 'nov';
 
 interface Props { onNav: (v: View) => void; }
@@ -40,9 +41,9 @@ export function IGCSE4MA1({ onNav }: Props) {
           <span className="pg-chip">Higher tier</span>
         </div>
         <div className="tabs">
-          {(['topics','papers','notes'] as Tab[]).map(t => (
+          {(['topics','papers','notes','guide'] as Tab[]).map(t => (
             <div key={t} className={`tab${tab === t ? ' active' : ''}`} onClick={() => setTab(t)}>
-              {t === 'topics' ? 'Topic practice' : t === 'papers' ? 'Past papers' : 'Notes'}
+              {t === 'topics' ? 'Topic practice' : t === 'papers' ? 'Past papers' : t === 'notes' ? 'Notes' : 'Course guide'}
             </div>
           ))}
         </div>
@@ -152,6 +153,8 @@ export function IGCSE4MA1({ onNav }: Props) {
             </div>
           </>
         )}
+
+        {tab === 'guide' && <CourseGuide variant="4ma1" />}
       </div>
     </div>
   );

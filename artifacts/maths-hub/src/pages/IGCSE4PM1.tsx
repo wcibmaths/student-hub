@@ -5,8 +5,9 @@ import { CHAPTERS_4PM1 } from '../data/chapters';
 import { PillPair, TopicLink } from '../components/PillPair';
 import { ChapterLinksRow } from '../components/TopicLinks';
 import { FreqBadge } from '../components/FreqBadge';
+import { CourseGuide } from '../components/CourseGuide';
 
-type Tab = 'topics' | 'papers' | 'notes';
+type Tab = 'topics' | 'papers' | 'notes' | 'guide';
 type SeriesFilter = 'all' | 'jan' | 'jun';
 
 interface Props { onNav: (v: View) => void; }
@@ -38,9 +39,9 @@ export function IGCSE4PM1({ onNav }: Props) {
           <span className="pg-chip">Single tier</span>
         </div>
         <div className="tabs">
-          {(['topics','papers','notes'] as Tab[]).map(t => (
+          {(['topics','papers','notes','guide'] as Tab[]).map(t => (
             <div key={t} className={`tab${tab === t ? ' active' : ''}`} onClick={() => setTab(t)}>
-              {t === 'topics' ? 'Topic practice' : t === 'papers' ? 'Past papers' : 'Notes'}
+              {t === 'topics' ? 'Topic practice' : t === 'papers' ? 'Past papers' : t === 'notes' ? 'Notes' : 'Course guide'}
             </div>
           ))}
         </div>
@@ -132,6 +133,8 @@ export function IGCSE4PM1({ onNav }: Props) {
             </div>
           </>
         )}
+
+        {tab === 'guide' && <CourseGuide variant="4pm1" />}
       </div>
     </div>
   );
