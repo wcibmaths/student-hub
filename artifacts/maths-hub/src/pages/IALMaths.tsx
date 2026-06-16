@@ -39,6 +39,13 @@ export function IALMaths({ onNav, onModule }: Props) {
             </div>
           ))}
         </div>
+        <div className="tabs">
+          {(['modules','guide'] as const).map(t => (
+            <div key={t} className={`tab${tab === t ? ' active' : ''}`} onClick={() => setTab(t)}>
+              {t === 'modules' ? 'Modules' : 'Course guide'}
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="pg-body">
