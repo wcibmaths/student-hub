@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import type { View } from '../App';
 import type { ModuleKey } from './ModuleDetail';
+import { CourseGuide } from '../components/CourseGuide';
 
 const CODES: Record<ModuleKey, string> = {
   P1:'WMA11', P2:'WMA12', P3:'WMA13', P4:'WMA14',
@@ -14,6 +16,8 @@ interface Props {
 }
 
 export function IALFurtherMaths({ onNav, onModule }: Props) {
+  const [tab, setTab] = useState<'modules' | 'guide'>('modules');
+
   return (
     <div className="view-enter" style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
       <div className="pg-header">
@@ -27,9 +31,17 @@ export function IALFurtherMaths({ onNav, onModule }: Props) {
           <span className="pg-chip amber">12 modules</span>
           <span className="pg-chip">Edexcel</span>
         </div>
+        <div className="tabs">
+          {(['modules','guide'] as const).map(t => (
+            <div key={t} className={`tab${tab === t ? ' active' : ''}`} onClick={() => setTab(t)}>
+              {t === 'modules' ? 'Modules' : 'Course guide'}
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="pg-body">
+        {tab === 'modules' && <>
         <div className="note-bar">
           <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
           P1–P4 are shared with IAL Maths. FP1 and FP2 are unique to Further Maths.
@@ -90,6 +102,9 @@ export function IALFurtherMaths({ onNav, onModule }: Props) {
             </div>
           </div>
         </div>
+        </>}
+
+        {tab === 'guide' && <CourseGuide variant="ial-fm" />}
       </div>
     </div>
   );
