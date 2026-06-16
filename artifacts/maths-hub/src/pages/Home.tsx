@@ -149,7 +149,7 @@ export function Home({ onNav }: HomeProps) {
               <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
             </div>
             <div className="prog-card-title">IAL Mathematics</div>
-            <div className="prog-card-code">Edexcel · 7 modules</div>
+            <div className="prog-card-code">Pearson Edexcel · 6 units</div>
             <div className="prog-card-desc">P1–P4, S1, M1, D1 · Years 12–13</div>
             <div className="prog-tags">
               <span className="prog-tag" style={{ background: 'var(--blue-bg)', color: 'var(--blue-txt)' }}>Pure</span>

@@ -28,8 +28,16 @@ export function IALMaths({ onNav, onModule }: Props) {
         </div>
         <div className="pg-title-row">
           <div className="pg-title">IAL Mathematics</div>
-          <span className="pg-chip green">7 modules</span>
-          <span className="pg-chip">Edexcel</span>
+          <span className="pg-chip green">P1–P4 + 2 applied</span>
+          <span className="pg-chip">Pearson Edexcel</span>
+          <span className="pg-chip">Modular</span>
+        </div>
+        <div className="tabs">
+          {(['modules','guide'] as const).map(t => (
+            <div key={t} className={`tab${tab === t ? ' active' : ''}`} onClick={() => setTab(t)}>
+              {t === 'modules' ? 'Modules' : 'Course guide'}
+            </div>
+          ))}
         </div>
         <div className="tabs">
           {(['modules','guide'] as const).map(t => (
