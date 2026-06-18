@@ -382,6 +382,8 @@ button { font-family: var(--font); cursor: pointer; }
 .resource-list a:hover { color: var(--blue-txt); }
 .resource-list a:last-child, .resource-list span:last-child { border-bottom: 0; }
 .resource-list a span, .resource-list > span span { flex: 0 0 auto; color: #2F7ECD; font-weight: 700; }
+.resource-list a > span:first-child, .resource-list > span > span { flex: 1 1 auto; color: inherit; font-weight: inherit; }
+.resource-list .ext-icon { flex: 0 0 auto; color: #2F7ECD; }
 .help-tiles { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; }
 .help-tile { min-width: 0; display: flex; align-items: center; gap: 8px; padding: 12px 10px; background: #FCEDEA; border: 1px solid #F1C4BE; border-radius: 10px; color: var(--red-txt); font-size: 12px; line-height: 1.35; }
 .help-tile span { flex: 0 0 auto; width: 22px; height: 22px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; border: 1px solid #E1847A; color: #C85245; font-weight: 700; }
