@@ -1,7 +1,11 @@
+import igcseFormulaSheetUrl from '../../../../attached_assets/IGCSE Formula Sheet.pdf';
+import igcseFurtherPureFormulaSheetUrl from '../../../../attached_assets/IGCSE Further Pure Formula Sheet.pdf';
+
 export interface DocLink {
   label: string;
   url: string;
   note?: string;
+  buttonLabel?: string;
 }
 
 export interface ProgrammeDocs {
@@ -10,10 +14,9 @@ export interface ProgrammeDocs {
   subtitle: string;
   color: 'blue' | 'purple' | 'green' | 'amber';
   formula: DocLink[];
+  formulaNote?: string;
   specification: DocLink[];
 }
-
-const PH = '#';
 
 export const PROGRAMME_DOCS: ProgrammeDocs[] = [
   {
@@ -22,8 +25,9 @@ export const PROGRAMME_DOCS: ProgrammeDocs[] = [
     subtitle: 'Edexcel · 4MA1 · Higher tier',
     color: 'blue',
     formula: [
-      { label: 'Formula sheet', url: PH, note: 'Printed inside the exam paper — no separate booklet.' },
+      { label: 'IGCSE Mathematics A, 4MA1', url: igcseFormulaSheetUrl, buttonLabel: 'Open formula sheet' },
     ],
+    formulaNote: 'Use the formula sheet for your qualification and paper. Final exam entries are confirmed by the school.',
     specification: [
       {
         label: 'Official Edexcel specification (2016–)',
@@ -37,8 +41,9 @@ export const PROGRAMME_DOCS: ProgrammeDocs[] = [
     subtitle: 'Edexcel · 4PM1',
     color: 'purple',
     formula: [
-      { label: 'Formula sheet', url: PH, note: 'Printed inside the exam paper — no separate booklet.' },
+      { label: 'IGCSE Further Pure Mathematics, 4PM1', url: igcseFurtherPureFormulaSheetUrl, buttonLabel: 'Open formula sheet' },
     ],
+    formulaNote: 'Use the formula sheet for your qualification and paper. Final exam entries are confirmed by the school.',
     specification: [
       {
         label: 'Official Edexcel specification (2016–)',

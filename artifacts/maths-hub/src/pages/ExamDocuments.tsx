@@ -26,7 +26,7 @@ export function ExamDocuments({ onNav }: Props) {
       <div className="pg-body">
         <div className="note-bar">
           <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-          IGCSE papers print their formulae inside the question paper. IAL Mathematics and IAL Further Mathematics share a single Edexcel formula booklet used in every exam.
+          Use the formula sheet for your qualification and paper. Final exam entries are confirmed by the school.
         </div>
 
         <div className="doc-tabs">
@@ -69,6 +69,7 @@ function ProgrammeCard({ prog, tab }: { prog: ProgrammeDocs; tab: Tab }) {
           {prog.formula.map((item, i) => (
             <DocRow key={i} item={item} />
           ))}
+          {prog.formulaNote && <div className="doc-row-note">{prog.formulaNote}</div>}
         </div>
       )}
 
@@ -95,7 +96,7 @@ function DocRow({ item }: { item: DocLink }) {
       {valid ? (
         <a className="doc-row-btn" href={item.url} target="_blank" rel="noopener noreferrer">
           <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Open PDF
+          {item.buttonLabel ?? 'Open PDF'}
         </a>
       ) : (
         <span className="doc-row-btn disabled">Coming soon</span>
